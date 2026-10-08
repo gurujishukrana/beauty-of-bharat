@@ -64,7 +64,9 @@ type ListArgs = {
 function articleWhere({ categoryId, authorId, excludeIds, featured }: ListArgs): Where {
   const and: Where[] = [publishedWhere]
   if (categoryId) {
-    and.push({ or: [{ primaryCategory: { equals: categoryId } }, { categories: { in: [categoryId] } }] })
+    and.push({
+      or: [{ primaryCategory: { equals: categoryId } }, { categories: { in: [categoryId] } }],
+    })
   }
   if (authorId) and.push({ authors: { in: [authorId] } })
   if (excludeIds?.length) and.push({ id: { not_in: excludeIds } })
@@ -86,18 +88,22 @@ export async function listArticles(args: ListArgs = {}) {
   })
 }
 
-export const getArticleBySlug = cache(async (slug: string, draft = false): Promise<Article | null> => {
-  const payload = await getPayloadClient()
-  const { docs } = await payload.find({
-    collection: 'articles',
-    where: draft ? { slug: { equals: slug } } : { and: [{ slug: { equals: slug } }, publishedWhere] },
-    draft,
-    limit: 1,
-    depth: 2,
-    select: { plainText: false },
-  })
-  return docs[0] ?? null
-})
+export const getArticleBySlug = cache(
+  async (slug: string, draft = false): Promise<Article | null> => {
+    const payload = await getPayloadClient()
+    const { docs } = await payload.find({
+      collection: 'articles',
+      where: draft
+        ? { slug: { equals: slug } }
+        : { and: [{ slug: { equals: slug } }, publishedWhere] },
+      draft,
+      limit: 1,
+      depth: 2,
+      select: { plainText: false },
+    })
+    return docs[0] ?? null
+  },
+)
 
 /** Editor-picked related stories, topped up with the newest from the same category, then anything. */
 export async function getRelatedArticles(article: Article, count = 3): Promise<ArticleSummary[]> {
@@ -107,12 +113,22 @@ export async function getRelatedArticles(article: Article, count = 3): Promise<A
   if (picked.length >= count) return picked.slice(0, count)
 
   const exclude = [article.id, ...picked.map((a) => a.id)]
-  const categoryId = typeof article.primaryCategory === 'object' ? article.primaryCategory.id : article.primaryCategory
-  const sameCategory = await listArticles({ categoryId, excludeIds: exclude, limit: count - picked.length })
+  const categoryId =
+    typeof article.primaryCategory === 'object'
+      ? article.primaryCategory.id
+      : article.primaryCategory
+  const sameCategory = await listArticles({
+    categoryId,
+    excludeIds: exclude,
+    limit: count - picked.length,
+  })
   const result = [...picked, ...sameCategory.docs]
   if (result.length >= count) return result
 
-  const rest = await listArticles({ excludeIds: [...exclude, ...sameCategory.docs.map((a) => a.id)], limit: count - result.length })
+  const rest = await listArticles({
+    excludeIds: [...exclude, ...sameCategory.docs.map((a) => a.id)],
+    limit: count - result.length,
+  })
   return [...result, ...rest.docs]
 }
 
@@ -123,12 +139,18 @@ export async function getHomeData() {
   const home = settings.homepage ?? {}
   const latestCount = home.latestCount ?? 6
 
-  const featuredResult = await listArticles({ featured: true, limit: 1 })
-  const newest = await listArticles({ limit: latestCount + 3 })
+  // The newest featured story leads; the next two featured stories sit beside it.
+  // Without enough featured stories, the newest ones fill in.
+  const [featuredResult, newest] = await Promise.all([
+    listArticles({ featured: true, limit: 3 }),
+    listArticles({ limit: latestCount + 3 }),
+  ])
   const featured = featuredResult.docs[0] ?? newest.docs[0] ?? null
 
   const shown = new Set<number>(featured ? [featured.id] : [])
-  const secondary = newest.docs.filter((a) => !shown.has(a.id)).slice(0, 2)
+  const secondary = [...featuredResult.docs, ...newest.docs]
+    .filter((a, i, all) => !shown.has(a.id) && all.findIndex((b) => b.id === a.id) === i)
+    .slice(0, 2)
   secondary.forEach((a) => shown.add(a.id))
   const latest = newest.docs.filter((a) => !shown.has(a.id)).slice(0, latestCount)
 
@@ -189,7 +211,10 @@ async function getMostViewed(limit: number): Promise<ArticleSummary[]> {
     const id = typeof row.article === 'object' ? row.article.id : row.article
     totals.set(id, (totals.get(id) ?? 0) + (row.count ?? 0))
   }
-  const ids = [...totals.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit * 2).map(([id]) => id)
+  const ids = [...totals.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit * 2)
+    .map(([id]) => id)
   if (!ids.length) return []
   const { docs: articles } = await payload.find({
     collection: 'articles',
@@ -234,18 +259,22 @@ async function getPeopleBand(settings: SiteSetting): Promise<Person[]> {
   return all.slice(0, 5)
 }
 
-export const getPersonBySlug = cache(async (slug: string, draft = false): Promise<Person | null> => {
-  const payload = await getPayloadClient()
-  const { docs } = await payload.find({
-    collection: 'people',
-    where: draft ? { slug: { equals: slug } } : { and: [{ slug: { equals: slug } }, publicPeopleWhere] },
-    draft,
-    limit: 1,
-    depth: 1,
-    select: { articles: false },
-  })
-  return docs[0] ?? null
-})
+export const getPersonBySlug = cache(
+  async (slug: string, draft = false): Promise<Person | null> => {
+    const payload = await getPayloadClient()
+    const { docs } = await payload.find({
+      collection: 'people',
+      where: draft
+        ? { slug: { equals: slug } }
+        : { and: [{ slug: { equals: slug } }, publicPeopleWhere] },
+      draft,
+      limit: 1,
+      depth: 1,
+      select: { articles: false },
+    })
+    return docs[0] ?? null
+  },
+)
 
 /* ----------------------------------------------------------------------------- Search */
 
@@ -258,37 +287,47 @@ export async function searchSite(query: string) {
   const articleWhere: Where = {
     and: [
       publishedWhere,
-      ...terms.map(
-        (term): Where => ({
-          or: [
-            { title: { like: term } },
-            { deck: { like: term } },
-            { plainText: { like: term } },
-            { 'location.name': { like: term } },
-          ],
-        }),
-      ),
+      ...terms.map((term): Where => ({
+        or: [
+          { title: { like: term } },
+          { deck: { like: term } },
+          { plainText: { like: term } },
+          { 'location.name': { like: term } },
+        ],
+      })),
     ],
   }
   const peopleWhere: Where = {
     and: [
       publicPeopleWhere,
-      ...terms.map(
-        (term): Where => ({
-          or: [
-            { fullName: { like: term } },
-            { designation: { like: term } },
-            { 'location.name': { like: term } },
-            { 'location.state': { like: term } },
-          ],
-        }),
-      ),
+      ...terms.map((term): Where => ({
+        or: [
+          { fullName: { like: term } },
+          { designation: { like: term } },
+          { 'location.name': { like: term } },
+          { 'location.state': { like: term } },
+        ],
+      })),
     ],
   }
 
   const [articles, people] = await Promise.all([
-    payload.find({ collection: 'articles', where: articleWhere, sort: '-publishedAt', limit: 30, depth: 1, select: { body: false } }),
-    payload.find({ collection: 'people', where: peopleWhere, sort: 'order', limit: 12, depth: 1, select: { bio: false, articles: false } }),
+    payload.find({
+      collection: 'articles',
+      where: articleWhere,
+      sort: '-publishedAt',
+      limit: 30,
+      depth: 1,
+      select: { body: false },
+    }),
+    payload.find({
+      collection: 'people',
+      where: peopleWhere,
+      sort: 'order',
+      limit: 12,
+      depth: 1,
+      select: { bio: false, articles: false },
+    }),
   ])
   return { terms, articles: articles.docs, people: people.docs }
 }

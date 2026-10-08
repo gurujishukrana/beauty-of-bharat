@@ -26,7 +26,8 @@ export function SeoPreview() {
   }))
 
   const shownTitle = `${metaTitle || title || 'Headline'} | Beauty of Bharat`
-  const shownDescription = metaDescription || deck || 'The standfirst will be used as the description.'
+  const shownDescription =
+    metaDescription || deck || 'The standfirst will be used as the description.'
   const titleLength = (metaTitle || title || '').length
   const descriptionLength = (metaDescription || deck || '').length
 

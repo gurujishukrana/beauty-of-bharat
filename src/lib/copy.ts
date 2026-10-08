@@ -95,7 +95,8 @@ export const copy = {
     intro:
       'Our reporters, editors and photographers work from the places they write about. Everyone listed here has been issued an official Beauty of Bharat press card.',
     verifyTitle: 'Verify a press card',
-    verifyText: 'If someone says they represent Beauty of Bharat and they are not listed here, please',
+    verifyText:
+      'If someone says they represent Beauty of Bharat and they are not listed here, please',
     verifyLink: 'let us know',
     everyone: 'Everyone',
     searchLabel: 'Search by name or location',

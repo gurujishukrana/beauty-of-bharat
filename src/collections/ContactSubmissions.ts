@@ -18,7 +18,8 @@ export const ContactSubmissions: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'topic', 'status', 'contact', 'createdAt'],
     group: 'Inbox',
-    description: 'Messages sent through the Contact page. Each one is also emailed to the matching desk.',
+    description:
+      'Messages sent through the Contact page. Each one is also emailed to the matching desk.',
   },
   defaultSort: '-createdAt',
   // Created only by the contact form's server action (which bypasses access control).

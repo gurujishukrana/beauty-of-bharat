@@ -5,7 +5,16 @@ import type { ImageData } from '@/lib/media'
 import { initials } from '@/lib/text'
 
 /** Soft tones from the design files, picked deterministically per name for initials avatars. */
-const TONES = ['#E7E1D5', '#DDE3DC', '#E1E0E8', '#E9DFD3', '#DCE2E4', '#E4E2D6', '#E3DED2', '#D9E1DF']
+const TONES = [
+  '#E7E1D5',
+  '#DDE3DC',
+  '#E1E0E8',
+  '#E9DFD3',
+  '#DCE2E4',
+  '#E4E2D6',
+  '#E3DED2',
+  '#D9E1DF',
+]
 
 export function toneFor(name: string): string {
   let hash = 0
@@ -26,7 +35,16 @@ type Props = {
 }
 
 /** Person photo, or their initials on a soft tone when there is no photo yet. */
-export function Avatar({ name, image, size, shape = 'round', sizes, priority, className, initialsClassName }: Props) {
+export function Avatar({
+  name,
+  image,
+  size,
+  shape = 'round',
+  sizes,
+  priority,
+  className,
+  initialsClassName,
+}: Props) {
   const round = shape === 'round'
   return (
     <div
@@ -53,7 +71,11 @@ export function Avatar({ name, image, size, shape = 'round', sizes, priority, cl
           style={{ objectPosition: image.position }}
         />
       ) : (
-        <span aria-hidden="true" className={initialsClassName} style={size ? { fontSize: Math.round(size * 0.38) } : undefined}>
+        <span
+          aria-hidden="true"
+          className={initialsClassName}
+          style={size ? { fontSize: Math.round(size * 0.38) } : undefined}
+        >
           {initials(name)}
         </span>
       )}

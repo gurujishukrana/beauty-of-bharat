@@ -14,7 +14,14 @@ export const Articles: CollectionConfig = {
   slug: 'articles',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', '_status', 'primaryCategory', 'authors', 'publishedAt', 'reviewStatus'],
+    defaultColumns: [
+      'title',
+      '_status',
+      'primaryCategory',
+      'authors',
+      'publishedAt',
+      'reviewStatus',
+    ],
     listSearchableFields: ['title', 'deck'],
     group: 'Content',
     livePreview: { url: ({ data }) => previewPath(routes.article(String(data?.slug ?? ''))) },
@@ -64,7 +71,8 @@ export const Articles: CollectionConfig = {
               type: 'textarea',
               maxLength: 200,
               admin: {
-                description: 'Short text for story cards (200 characters max). Leave empty to use the standfirst.',
+                description:
+                  'Short text for story cards (200 characters max). Leave empty to use the standfirst.',
               },
             },
             {
@@ -77,7 +85,12 @@ export const Articles: CollectionConfig = {
             {
               type: 'row',
               fields: [
-                { name: 'heroCaption', type: 'text', label: 'Hero caption', admin: { width: '60%' } },
+                {
+                  name: 'heroCaption',
+                  type: 'text',
+                  label: 'Hero caption',
+                  admin: { width: '60%' },
+                },
                 {
                   name: 'heroCredit',
                   type: 'text',
@@ -90,46 +103,40 @@ export const Articles: CollectionConfig = {
           ],
         },
         {
+          name: 'seo',
           label: 'SEO',
           fields: [
             {
-              name: 'seo',
-              type: 'group',
-              label: false,
-              fields: [
-                {
-                  name: 'preview',
-                  type: 'ui',
-                  admin: { components: { Field: '@/admin/SeoPreview#SeoPreview' } },
-                },
-                {
-                  name: 'metaTitle',
-                  type: 'text',
-                  admin: { description: 'Up to 60 characters. Leave empty to use the headline.' },
-                },
-                {
-                  name: 'metaDescription',
-                  type: 'textarea',
-                  admin: { description: 'Up to 160 characters. Leave empty to use the standfirst.' },
-                },
-                {
-                  name: 'ogImage',
-                  type: 'upload',
-                  relationTo: 'media',
-                  label: 'Social sharing image',
-                  admin: { description: 'Leave empty to use the hero image.' },
-                },
-                {
-                  name: 'canonicalUrl',
-                  type: 'text',
-                  admin: { description: 'Only if this story was first published elsewhere.' },
-                },
-                {
-                  name: 'noIndex',
-                  type: 'checkbox',
-                  label: 'Hide from search engines, sitemaps and RSS',
-                },
-              ],
+              name: 'preview',
+              type: 'ui',
+              admin: { components: { Field: '@/admin/SeoPreview#SeoPreview' } },
+            },
+            {
+              name: 'metaTitle',
+              type: 'text',
+              admin: { description: 'Up to 60 characters. Leave empty to use the headline.' },
+            },
+            {
+              name: 'metaDescription',
+              type: 'textarea',
+              admin: { description: 'Up to 160 characters. Leave empty to use the standfirst.' },
+            },
+            {
+              name: 'ogImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Social sharing image',
+              admin: { description: 'Leave empty to use the hero image.' },
+            },
+            {
+              name: 'canonicalUrl',
+              type: 'text',
+              admin: { description: 'Only if this story was first published elsewhere.' },
+            },
+            {
+              name: 'noIndex',
+              type: 'checkbox',
+              label: 'Hide from search engines, sitemaps and RSS',
             },
           ],
         },
@@ -144,7 +151,8 @@ export const Articles: CollectionConfig = {
       admin: {
         position: 'sidebar',
         date: { pickerAppearance: 'dayAndTime', displayFormat: 'd MMM yyyy, h:mm a' },
-        description: 'Shown on the story and used for ordering. Filled in automatically on publish.',
+        description:
+          'Shown on the story and used for ordering. Filled in automatically on publish.',
       },
     },
     {
@@ -171,7 +179,12 @@ export const Articles: CollectionConfig = {
       label: 'Extra categories',
       admin: { position: 'sidebar' },
     },
-    { name: 'location', type: 'relationship', relationTo: 'locations', admin: { position: 'sidebar' } },
+    {
+      name: 'location',
+      type: 'relationship',
+      relationTo: 'locations',
+      admin: { position: 'sidebar' },
+    },
     {
       name: 'featured',
       type: 'checkbox',
@@ -219,7 +232,11 @@ export const Articles: CollectionConfig = {
       name: 'readTime',
       type: 'number',
       label: 'Read time (minutes)',
-      admin: { position: 'sidebar', readOnly: true, description: 'Calculated from the story text.' },
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Calculated from the story text.',
+      },
     },
     {
       name: 'plainText',

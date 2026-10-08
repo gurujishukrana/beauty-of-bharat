@@ -4,7 +4,12 @@ import { ErrorView } from '@/components/ErrorView'
 import { copy } from '@/lib/copy'
 
 /** 500 page for errors inside the site layout. */
-export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function ErrorPage({
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
   return (
     <ErrorView
       kicker={copy.error.kicker}

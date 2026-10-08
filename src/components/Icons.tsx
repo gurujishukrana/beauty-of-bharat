@@ -126,7 +126,15 @@ export const CameraIcon = (p: IconProps) => (
   </Svg>
 )
 export const PlayIcon = ({ size = 26, ...p }: IconProps) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" {...p}>
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    focusable="false"
+    {...p}
+  >
     <path d="M8 5l12 7-12 7z" />
   </svg>
 )

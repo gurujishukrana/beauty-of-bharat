@@ -9,7 +9,13 @@ const sizes: Record<Variant, string> = {
 }
 
 /** Three equal segments of the brand colours. Footer variant swaps navy for white on the dark ground. */
-export function TricolourRule({ variant = 'top', className }: { variant?: Variant; className?: string }) {
+export function TricolourRule({
+  variant = 'top',
+  className,
+}: {
+  variant?: Variant
+  className?: string
+}) {
   return (
     <div className={cn('flex', sizes[variant], className)} aria-hidden="true">
       <span className="flex-1 bg-saffron" />

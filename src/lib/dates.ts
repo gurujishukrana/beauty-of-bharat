@@ -7,9 +7,10 @@ const toDate = (value: DateInput) => (value instanceof Date ? value : new Date(v
 
 function parts(value: DateInput, options: Intl.DateTimeFormatOptions) {
   const out: Record<string, string> = {}
-  for (const p of new Intl.DateTimeFormat('en-GB', { ...options, timeZone: SITE_TIME_ZONE }).formatToParts(
-    toDate(value),
-  )) {
+  for (const p of new Intl.DateTimeFormat('en-GB', {
+    ...options,
+    timeZone: SITE_TIME_ZONE,
+  }).formatToParts(toDate(value))) {
     out[p.type] = p.value
   }
   return out

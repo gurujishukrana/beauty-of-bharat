@@ -15,7 +15,12 @@ export function SearchForm({
   id?: string
 }) {
   return (
-    <form role="search" action="/search" method="get" className={cn('flex w-full max-w-[560px] gap-2', className)}>
+    <form
+      role="search"
+      action="/search"
+      method="get"
+      className={cn('flex w-full max-w-[560px] gap-2', className)}
+    >
       <label htmlFor={id} className="sr-only">
         {copy.search.label}
       </label>

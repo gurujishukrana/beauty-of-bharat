@@ -10,14 +10,19 @@ export const Categories: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'order', 'showInCategoryBar'],
     group: 'Content',
-    description: 'Sections such as Education or Ground Reports. Lower "order" numbers appear first.',
+    description:
+      'Sections such as Education or Ground Reports. Lower "order" numbers appear first.',
   },
   defaultSort: 'order',
   access: { read: anyone, create: staff, update: staff, delete: staff },
   fields: [
     { name: 'name', type: 'text', required: true },
     slugField('name'),
-    { name: 'description', type: 'textarea', admin: { description: 'Shown on the category page.' } },
+    {
+      name: 'description',
+      type: 'textarea',
+      admin: { description: 'Shown on the category page.' },
+    },
     {
       type: 'row',
       fields: [

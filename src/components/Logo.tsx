@@ -25,7 +25,15 @@ export function Logo({ tone = 'color', height, className, alt = 'Beauty of Bhara
   )
 }
 
-export function Mark({ size, tone = 'color', className }: { size: number; tone?: 'color' | 'white' | 'black'; className?: string }) {
+export function Mark({
+  size,
+  tone = 'color',
+  className,
+}: {
+  size: number
+  tone?: 'color' | 'white' | 'black'
+  className?: string
+}) {
   return (
     <img
       src={`/brand/mark-${tone}.svg`}

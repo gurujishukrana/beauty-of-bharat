@@ -10,7 +10,8 @@ export const Locations: CollectionConfig = {
     useAsTitle: 'displayName',
     defaultColumns: ['displayName', 'state', 'slug'],
     group: 'Content',
-    description: 'Places stories come from and reporters are based in. Shown as "Ludhiana, Punjab".',
+    description:
+      'Places stories come from and reporters are based in. Shown as "Ludhiana, Punjab".',
   },
   defaultSort: 'name',
   access: { read: anyone, create: staff, update: staff, delete: staff },

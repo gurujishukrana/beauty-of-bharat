@@ -76,15 +76,27 @@ export const People: CollectionConfig = {
               type: 'textarea',
               required: true,
               maxLength: 240,
-              admin: { description: 'One or two sentences for the People page card (240 characters max).' },
+              admin: {
+                description: 'One or two sentences for the People page card (240 characters max).',
+              },
             },
             {
               name: 'bio',
               type: 'richText',
               editor: simpleEditor,
-              admin: { description: 'Longer bio for the profile page. Falls back to the short bio.' },
+              admin: {
+                description: 'Longer bio for the profile page. Falls back to the short bio.',
+              },
             },
-            socialLinksField(['instagram', 'x', 'youtube', 'linkedin', 'facebook', 'website', 'email']),
+            socialLinksField([
+              'instagram',
+              'x',
+              'youtube',
+              'linkedin',
+              'facebook',
+              'website',
+              'email',
+            ]),
           ],
         },
         {
@@ -116,7 +128,14 @@ export const People: CollectionConfig = {
                     description: 'Suspended or revoked cards remove the profile from the site.',
                   },
                 },
-                { name: 'dateJoined', type: 'date', admin: { width: '33%', date: { pickerAppearance: 'monthOnly', displayFormat: 'MMMM yyyy' } } },
+                {
+                  name: 'dateJoined',
+                  type: 'date',
+                  admin: {
+                    width: '33%',
+                    date: { pickerAppearance: 'monthOnly', displayFormat: 'MMMM yyyy' },
+                  },
+                },
               ],
             },
           ],

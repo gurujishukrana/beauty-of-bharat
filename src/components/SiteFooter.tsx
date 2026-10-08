@@ -13,9 +13,15 @@ export async function SiteFooter() {
   const [settings, navigation] = await Promise.all([getSiteSettings(), getNavigation()])
   const year = new Date().getFullYear()
 
-  const sections = navigation.footerSections?.length ? navigation.footerSections : DEFAULT_HEADER_LINKS
+  const sections = navigation.footerSections?.length
+    ? navigation.footerSections
+    : DEFAULT_HEADER_LINKS
   const legal = navigation.footerLegal?.length ? navigation.footerLegal : DEFAULT_LEGAL_LINKS
-  const follow: FooterLink[] = (settings.socialLinks ?? []).map((s) => ({ label: SOCIAL_LABELS[s.platform], url: s.url, external: true }))
+  const follow: FooterLink[] = (settings.socialLinks ?? []).map((s) => ({
+    label: SOCIAL_LABELS[s.platform],
+    url: s.url,
+    external: true,
+  }))
 
   const columns: { title: string; links: FooterLink[] }[] = [
     { title: copy.footer.sections, links: sections },
@@ -39,7 +45,11 @@ export async function SiteFooter() {
                   {column.links.map((link) => (
                     <li key={`${link.label}-${link.url}`}>
                       {link.external || /^https?:/.test(link.url) ? (
-                        <a href={link.url} rel="me noopener" className="text-footer-text hover:text-white">
+                        <a
+                          href={link.url}
+                          rel="me noopener"
+                          className="text-footer-text hover:text-white"
+                        >
                           {link.label}
                         </a>
                       ) : (

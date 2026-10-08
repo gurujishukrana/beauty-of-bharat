@@ -19,7 +19,13 @@ const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1
  * Full-screen phone menu (MobileArticle.html, open state). Traps focus while open,
  * closes on Esc, locks page scroll, and returns focus to the menu button.
  */
-export function MobileNav({ links, topics }: { links: NavLink[]; topics: { name: string; href: string }[] }) {
+export function MobileNav({
+  links,
+  topics,
+}: {
+  links: NavLink[]
+  topics: { name: string; href: string }[]
+}) {
   const [open, setOpen] = useState(false)
   const pathname = usePathname() ?? '/'
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -124,7 +130,9 @@ export function MobileNav({ links, topics }: { links: NavLink[]; topics: { name:
 
           {topics.length > 0 && (
             <div className="flex flex-col gap-3 px-4 py-5">
-              <h2 className="text-[11px] font-bold tracking-[0.08em] text-subtle uppercase">{copy.nav.topics}</h2>
+              <h2 className="text-[11px] font-bold tracking-[0.08em] text-subtle uppercase">
+                {copy.nav.topics}
+              </h2>
               <ul className="flex flex-wrap gap-2">
                 {topics.map((topic) => (
                   <li key={topic.href}>

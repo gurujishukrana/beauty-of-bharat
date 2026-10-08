@@ -50,7 +50,17 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Articles, People, Categories, Locations, Media, Pages, ContactSubmissions, ArticleViews, Users],
+  collections: [
+    Articles,
+    People,
+    Categories,
+    Locations,
+    Media,
+    Pages,
+    ContactSubmissions,
+    ArticleViews,
+    Users,
+  ],
   globals: [SiteSettings, Navigation],
   editor: simpleEditor,
   secret: process.env.PAYLOAD_SECRET || '',
@@ -72,9 +82,12 @@ export default buildConfig({
         admin: { group: 'Settings' },
         access: {
           read: () => true,
-          create: ({ req }) => (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
-          update: ({ req }) => (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
-          delete: ({ req }) => (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
+          create: ({ req }) =>
+            (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
+          update: ({ req }) =>
+            (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
+          delete: ({ req }) =>
+            (req.user as { role?: string } | null)?.role !== 'reporter' && Boolean(req.user),
         },
         hooks: { afterChange: [({ req, doc }) => (revalidate(req, EVERYTHING), doc)] },
       },

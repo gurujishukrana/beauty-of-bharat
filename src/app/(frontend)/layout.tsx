@@ -34,7 +34,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
   return {
     metadataBase: new URL(getSiteUrl()),
-    title: { default: `${copy.siteName} — uplifting stories from ground zero`, template: `%s | ${copy.siteName}` },
+    title: {
+      default: `${copy.siteName} — uplifting stories from ground zero`,
+      template: `%s | ${copy.siteName}`,
+    },
     description: settings.tagline,
     applicationName: copy.siteName,
     alternates: {

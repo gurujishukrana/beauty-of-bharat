@@ -11,7 +11,10 @@ const mark = await readFile(path.join(root, 'brand/mark-color.svg'))
 
 async function icon(size, padding = 0.14) {
   const inner = Math.round(size * (1 - padding * 2))
-  const art = await sharp(mark, { density: 1200 }).resize(inner, inner, { fit: 'contain', background: '#ffffff' }).png().toBuffer()
+  const art = await sharp(mark, { density: 1200 })
+    .resize(inner, inner, { fit: 'contain', background: '#ffffff' })
+    .png()
+    .toBuffer()
   return sharp({ create: { width: size, height: size, channels: 4, background: '#ffffff' } })
     .composite([{ input: art, gravity: 'center' }])
     .png()

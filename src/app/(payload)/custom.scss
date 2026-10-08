@@ -1,0 +1,22 @@
+// Beauty of Bharat admin branding: brand green for success states, saffron for warnings,
+// and the tricolour strip across the top of every admin screen.
+:root {
+  --color-success-500: rgb(16, 133, 71);
+  --color-success-600: rgb(14, 122, 65);
+  --color-warning-500: rgb(241, 146, 63);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 4px;
+  z-index: 1000;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #f1923f 0 33.333%,
+    #232357 33.333% 66.666%,
+    #108547 66.666% 100%
+  );
+}

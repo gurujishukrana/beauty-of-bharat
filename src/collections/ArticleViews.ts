@@ -18,7 +18,13 @@ export const ArticleViews: CollectionConfig = {
   indexes: [{ fields: ['article', 'day'], unique: true }],
   fields: [
     { name: 'article', type: 'relationship', relationTo: 'articles', required: true, index: true },
-    { name: 'day', type: 'text', required: true, index: true, admin: { description: 'YYYY-MM-DD (IST)' } },
+    {
+      name: 'day',
+      type: 'text',
+      required: true,
+      index: true,
+      admin: { description: 'YYYY-MM-DD (IST)' },
+    },
     { name: 'count', type: 'number', defaultValue: 0, required: true },
   ],
   timestamps: false,

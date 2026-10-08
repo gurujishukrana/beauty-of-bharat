@@ -5,19 +5,19 @@ are in `design-reference/`; logos are in `brand/`.
 
 ## Stack
 
-| Concern | Choice | Notes |
-|---|---|---|
-| Framework | Next.js 16.3 (App Router, RSC, TypeScript strict) | Pinned to the version Payload 3.90's official templates test against. |
-| CMS | Payload 3.90 inside the same Next app, admin at `/admin` | |
-| Database | PostgreSQL via `@payloadcms/db-postgres` | Docker Compose locally, Neon/Supabase in production. Migrations committed and run on boot (`prodMigrations`). |
-| Media | `@payloadcms/storage-s3` (Cloudflare R2) when `S3_BUCKET` is set, local disk otherwise | |
-| Rich text | Lexical, rendered with Payload's JSX converters (no raw HTML) | |
-| Styling | Tailwind CSS v4, tokens in `@theme` | No UI kit. |
-| Fonts | `next/font/google`: Newsreader (variable, opsz, normal + italic) and Libre Franklin (variable) | Variable files cover the listed weights in one file per style. |
-| Email | Resend over its HTTP API (no SDK); logs to the console when `RESEND_API_KEY` is unset | |
-| Spam | Honeypot + Cloudflare Turnstile + rate limit (5/hour per hashed IP, counted in the DB so it works on serverless) | |
-| Tests | Vitest (unit), Playwright + axe (E2E, desktop + mobile), Lighthouse CI config | |
-| Package manager | pnpm 10 (via corepack) | |
+| Concern         | Choice                                                                                                           | Notes                                                                                                         |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Framework       | Next.js 16.3 (App Router, RSC, TypeScript strict)                                                                | Pinned to the version Payload 3.90's official templates test against.                                         |
+| CMS             | Payload 3.90 inside the same Next app, admin at `/admin`                                                         |                                                                                                               |
+| Database        | PostgreSQL via `@payloadcms/db-postgres`                                                                         | Docker Compose locally, Neon/Supabase in production. Migrations committed and run on boot (`prodMigrations`). |
+| Media           | `@payloadcms/storage-s3` (Cloudflare R2) when `S3_BUCKET` is set, local disk otherwise                           |                                                                                                               |
+| Rich text       | Lexical, rendered with Payload's JSX converters (no raw HTML)                                                    |                                                                                                               |
+| Styling         | Tailwind CSS v4, tokens in `@theme`                                                                              | No UI kit.                                                                                                    |
+| Fonts           | `next/font/google`: Newsreader (variable, opsz, normal + italic) and Libre Franklin (variable)                   | Variable files cover the listed weights in one file per style.                                                |
+| Email           | Resend over its HTTP API (no SDK); logs to the console when `RESEND_API_KEY` is unset                            |                                                                                                               |
+| Spam            | Honeypot + Cloudflare Turnstile + rate limit (5/hour per hashed IP, counted in the DB so it works on serverless) |                                                                                                               |
+| Tests           | Vitest (unit), Playwright + axe (E2E, desktop + mobile), Lighthouse CI config                                    |                                                                                                               |
+| Package manager | pnpm 10 (via corepack)                                                                                           |                                                                                                               |
 
 ### Deliberate deviations from the brief
 
@@ -65,7 +65,7 @@ As specified in section 4 of the brief, plus:
 - `articleViews` (optional, off by default): one row per article per day, counted server-side, no cookies.
 - `redirects` (from `@payloadcms/plugin-redirects`): rows are created automatically when a published article's slug changes.
 
-Access control: admins can do everything. Editors manage all content and can read submissions. Reporters can create and update only drafts where they are an author, and cannot publish (enforced in access *and* in a `beforeChange` hook). The public API reads only published articles, pages and categories, and only people who are published, active and shown on the People page.
+Access control: admins can do everything. Editors manage all content and can read submissions. Reporters can create and update only drafts where they are an author, and cannot publish (enforced in access _and_ in a `beforeChange` hook). The public API reads only published articles, pages and categories, and only people who are published, active and shown on the People page.
 
 ## Rendering and caching
 

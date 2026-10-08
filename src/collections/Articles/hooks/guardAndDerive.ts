@@ -9,17 +9,29 @@ import { calculateReadTime, lexicalToPlainText } from '@/lib/text'
  * - `publishedAt` defaults to the moment of publishing.
  * - `plainText` and `readTime` are derived from the body.
  */
-export const guardAndDerive: CollectionBeforeChangeHook = ({ data, req, operation, originalDoc }) => {
+export const guardAndDerive: CollectionBeforeChangeHook = ({
+  data,
+  req,
+  operation,
+  originalDoc,
+}) => {
   const user = req.user
 
   if (hasRole(user, 'reporter')) {
     if (data._status === 'published') {
-      throw new APIError('Reporters cannot publish. Use “Submit for review” instead.', 403, null, true)
+      throw new APIError(
+        'Reporters cannot publish. Use “Submit for review” instead.',
+        403,
+        null,
+        true,
+      )
     }
     const personId = personIdOf(user)
     if (operation === 'create' && personId !== null) {
       const authors = Array.isArray(data.authors) ? data.authors : []
-      const ids = authors.map((a: unknown) => (typeof a === 'object' && a ? (a as { id: unknown }).id : a))
+      const ids = authors.map((a: unknown) =>
+        typeof a === 'object' && a ? (a as { id: unknown }).id : a,
+      )
       if (!ids.includes(personId)) data.authors = [...authors, personId]
     }
   }

@@ -8,7 +8,8 @@ import { routes } from './url'
 const asObject = <T extends object>(value: unknown): T | null =>
   typeof value === 'object' && value !== null ? (value as T) : null
 
-export const categoryOf = (a: Pick<Article, 'primaryCategory'>) => asObject<Category>(a.primaryCategory)
+export const categoryOf = (a: Pick<Article, 'primaryCategory'>) =>
+  asObject<Category>(a.primaryCategory)
 export const locationOf = (a: Pick<Article, 'location'>) => asObject<Location>(a.location)
 export const authorsOf = (a: Pick<Article, 'authors'>) =>
   (a.authors ?? []).map((p) => asObject<Person>(p)).filter((p): p is Person => p !== null)
@@ -59,4 +60,5 @@ export function toCard(article: Omit<Article, 'body' | 'plainText'>): CardData {
 }
 
 /** "CATEGORY · PLACE" kicker text. */
-export const kicker = (...parts: Array<string | null | undefined>) => parts.filter(Boolean).join(' · ')
+export const kicker = (...parts: Array<string | null | undefined>) =>
+  parts.filter(Boolean).join(' · ')

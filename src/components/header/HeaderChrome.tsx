@@ -25,7 +25,9 @@ export function HeaderChrome({
   return (
     <>
       {full && utilityBar}
-      <div className={full ? 'max-sm:border-b max-sm:border-rule' : 'border-b border-rule'}>{mainBar}</div>
+      <div className={full ? 'max-sm:border-b max-sm:border-rule' : 'border-b border-rule'}>
+        {mainBar}
+      </div>
       {full && categoryBar}
     </>
   )

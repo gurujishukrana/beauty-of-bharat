@@ -79,7 +79,11 @@ export async function SiteHeader() {
   return (
     <header>
       <TricolourRule />
-      <HeaderChrome utilityBar={utilityBar} mainBar={mainBar} categoryBar={<CategoryBar categories={barCategories} />} />
+      <HeaderChrome
+        utilityBar={utilityBar}
+        mainBar={mainBar}
+        categoryBar={<CategoryBar categories={barCategories} />}
+      />
     </header>
   )
 }

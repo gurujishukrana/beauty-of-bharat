@@ -31,19 +31,13 @@ export const Pages: CollectionConfig = {
           fields: [{ name: 'layout', type: 'blocks', blocks: pageBlocks, required: true }],
         },
         {
+          name: 'seo',
           label: 'SEO',
           fields: [
-            {
-              name: 'seo',
-              type: 'group',
-              label: false,
-              fields: [
-                { name: 'metaTitle', type: 'text' },
-                { name: 'metaDescription', type: 'textarea' },
-                { name: 'ogImage', type: 'upload', relationTo: 'media' },
-                { name: 'noIndex', type: 'checkbox', label: 'Hide from search engines' },
-              ],
-            },
+            { name: 'metaTitle', type: 'text' },
+            { name: 'metaDescription', type: 'textarea' },
+            { name: 'ogImage', type: 'upload', relationTo: 'media' },
+            { name: 'noIndex', type: 'checkbox', label: 'Hide from search engines' },
           ],
         },
       ],

@@ -41,7 +41,8 @@ export const SiteSettings: GlobalConfig = {
               name: 'tagline',
               type: 'text',
               required: true,
-              defaultValue: 'A free newspaper telling uplifting stories about India from ground zero.',
+              defaultValue:
+                'A free newspaper telling uplifting stories about India from ground zero.',
               admin: { description: 'Footer, search results and social sharing.' },
             },
             {
@@ -51,7 +52,8 @@ export const SiteSettings: GlobalConfig = {
               defaultValue:
                 'A free newspaper telling *uplifting stories about India from ground zero* — the people, places and progress that deserve to be seen.',
               admin: {
-                description: 'The line at the top of the homepage. Wrap words in *asterisks* to italicise them.',
+                description:
+                  'The line at the top of the homepage. Wrap words in *asterisks* to italicise them.',
               },
             },
             {
@@ -69,7 +71,10 @@ export const SiteSettings: GlobalConfig = {
                   type: 'upload',
                   relationTo: 'media',
                   label: 'Default sharing image',
-                  admin: { width: '50%', description: '1200×630. Used when a page has no image of its own.' },
+                  admin: {
+                    width: '50%',
+                    description: '1200×630. Used when a page has no image of its own.',
+                  },
                 },
                 {
                   name: 'organizationLogo',
@@ -104,9 +109,24 @@ export const SiteSettings: GlobalConfig = {
                   'tips@thebeautyofbharat.com',
                   'Know someone or something that deserves to be seen? Tell us the story.',
                 ),
-                email('press', 'Press enquiries', 'press@thebeautyofbharat.com', 'For media, partnerships and interview requests.'),
-                email('general', 'General enquiries', 'hello@thebeautyofbharat.com', 'Anything else you would like to ask or share with us.'),
-                email('corrections', 'Corrections', 'corrections@thebeautyofbharat.com', 'Report a factual error. Please include the story link.'),
+                email(
+                  'press',
+                  'Press enquiries',
+                  'press@thebeautyofbharat.com',
+                  'For media, partnerships and interview requests.',
+                ),
+                email(
+                  'general',
+                  'General enquiries',
+                  'hello@thebeautyofbharat.com',
+                  'Anything else you would like to ask or share with us.',
+                ),
+                email(
+                  'corrections',
+                  'Corrections',
+                  'corrections@thebeautyofbharat.com',
+                  'Report a factual error. Please include the story link.',
+                ),
               ],
             },
             {
@@ -158,8 +178,14 @@ export const SiteSettings: GlobalConfig = {
                   defaultValue: 'pinned',
                   label: '"Most read" list',
                   options: [
-                    { label: 'Stories picked below (newest stories fill any gaps)', value: 'pinned' },
-                    { label: 'Count views (private: no cookies, one counter per story per day)', value: 'views' },
+                    {
+                      label: 'Stories picked below (newest stories fill any gaps)',
+                      value: 'pinned',
+                    },
+                    {
+                      label: 'Count views (private: no cookies, one counter per story per day)',
+                      value: 'views',
+                    },
                   ],
                 },
                 {
@@ -174,8 +200,18 @@ export const SiteSettings: GlobalConfig = {
                 {
                   type: 'row',
                   fields: [
-                    { name: 'showPeopleBand', type: 'checkbox', defaultValue: true, label: 'Show the people band' },
-                    { name: 'showTipBand', type: 'checkbox', defaultValue: true, label: 'Show the news tip band' },
+                    {
+                      name: 'showPeopleBand',
+                      type: 'checkbox',
+                      defaultValue: true,
+                      label: 'Show the people band',
+                    },
+                    {
+                      name: 'showTipBand',
+                      type: 'checkbox',
+                      defaultValue: true,
+                      label: 'Show the news tip band',
+                    },
                   ],
                 },
                 {

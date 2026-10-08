@@ -50,7 +50,12 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/brand/**' }],
     remotePatterns: mediaHost
-      ? [{ protocol: mediaHost.protocol.replace(':', '') as 'https' | 'http', hostname: mediaHost.hostname }]
+      ? [
+          {
+            protocol: mediaHost.protocol.replace(':', '') as 'https' | 'http',
+            hostname: mediaHost.hostname,
+          },
+        ]
       : [],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },

@@ -20,7 +20,15 @@ type Props = {
  * Fixed-ratio image frame. The frame reserves its space (no layout shift) and shows the
  * `placeholder` colour while loading, or permanently when an article has no image yet.
  */
-export function MediaImage({ image, aspect, sizes, priority, className, placeholderLabel, rounded = true }: Props) {
+export function MediaImage({
+  image,
+  aspect,
+  sizes,
+  priority,
+  className,
+  placeholderLabel,
+  rounded = true,
+}: Props) {
   return (
     <div
       className={cn('relative overflow-hidden bg-placeholder', rounded && 'rounded-xs', className)}

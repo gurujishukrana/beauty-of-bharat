@@ -9,5 +9,11 @@ export const metadata: Metadata = {
 }
 
 export default function NotFound() {
-  return <ErrorView kicker={copy.notFound.kicker} title={copy.notFound.title} text={copy.notFound.text} />
+  return (
+    <ErrorView
+      kicker={copy.notFound.kicker}
+      title={copy.notFound.title}
+      text={copy.notFound.text}
+    />
+  )
 }

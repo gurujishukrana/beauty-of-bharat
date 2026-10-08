@@ -11,5 +11,7 @@ export function Logo() {
 }
 
 export function Icon() {
-  return <img src="/brand/mark-color.svg" alt="Beauty of Bharat" style={{ height: 28, width: 28 }} />
+  return (
+    <img src="/brand/mark-color.svg" alt="Beauty of Bharat" style={{ height: 28, width: 28 }} />
+  )
 }

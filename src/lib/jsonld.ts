@@ -15,7 +15,12 @@ export function organizationJsonLd(settings: SiteSetting) {
     '@id': ORG_ID(),
     name: copy.siteName,
     url: getSiteUrl(),
-    logo: { '@type': 'ImageObject', url: absoluteUrl('/icons/icon-512.png'), width: 512, height: 512 },
+    logo: {
+      '@type': 'ImageObject',
+      url: absoluteUrl('/icons/icon-512.png'),
+      width: 512,
+      height: 512,
+    },
     description: settings.tagline,
     sameAs,
     publishingPrinciples: absoluteUrl(routes.about),
@@ -33,7 +38,10 @@ export function websiteJsonLd() {
     publisher: { '@id': ORG_ID() },
     potentialAction: {
       '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: `${getSiteUrl()}/search?q={search_term_string}` },
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${getSiteUrl()}/search?q={search_term_string}`,
+      },
       'query-input': 'required name=search_term_string',
     },
   }
@@ -53,7 +61,12 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
 }
 
 export function personRef(p: Person) {
-  return { '@type': 'Person', name: p.fullName, url: absoluteUrl(routes.person(p.slug)), jobTitle: p.designation }
+  return {
+    '@type': 'Person',
+    name: p.fullName,
+    url: absoluteUrl(routes.person(p.slug)),
+    jobTitle: p.designation,
+  }
 }
 
 export function articleJsonLd(article: Article, ogImageUrl: string) {
@@ -73,7 +86,12 @@ export function articleJsonLd(article: Article, ogImageUrl: string) {
     datePublished: published,
     dateModified: article.updatedAt,
     author: authorsOf(article).map(personRef),
-    publisher: { '@id': ORG_ID(), '@type': 'NewsMediaOrganization', name: copy.siteName, logo: { '@type': 'ImageObject', url: absoluteUrl('/icons/icon-512.png') } },
+    publisher: {
+      '@id': ORG_ID(),
+      '@type': 'NewsMediaOrganization',
+      name: copy.siteName,
+      logo: { '@type': 'ImageObject', url: absoluteUrl('/icons/icon-512.png') },
+    },
     articleSection: category?.name,
     contentLocation: location ? { '@type': 'Place', name: locationLabel(location) } : undefined,
     isAccessibleForFree: true,

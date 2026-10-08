@@ -3,7 +3,11 @@ import type { Field, GlobalConfig } from 'payload'
 import { adminOnly, anyone } from '@/access'
 import { EVERYTHING, revalidate } from '@/hooks/revalidate'
 
-const links = (name: string, label: string, defaultValue: { label: string; url: string }[]): Field => ({
+const links = (
+  name: string,
+  label: string,
+  defaultValue: { label: string; url: string }[],
+): Field => ({
   name,
   label,
   type: 'array',
@@ -41,7 +45,10 @@ export const DEFAULT_LEGAL_LINKS = [
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
-  admin: { group: 'Settings', description: 'Header and footer links. The "Follow" column uses Site settings → social links.' },
+  admin: {
+    group: 'Settings',
+    description: 'Header and footer links. The "Follow" column uses Site settings → social links.',
+  },
   access: { read: anyone, update: adminOnly },
   fields: [
     links('header', 'Main navigation', DEFAULT_HEADER_LINKS),

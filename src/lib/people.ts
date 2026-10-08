@@ -3,7 +3,10 @@ import type { Person } from '@/payload-types'
 /** Mirrors the public access rule: published, active press card, shown on the People page. */
 export function isPublicPerson(p: Partial<Person> | null | undefined): boolean {
   return Boolean(
-    p && p._status === 'published' && p.pressCardStatus === 'active' && p.showOnPeoplePage !== false,
+    p &&
+    p._status === 'published' &&
+    p.pressCardStatus === 'active' &&
+    p.showOnPeoplePage !== false,
   )
 }
 
@@ -19,7 +22,9 @@ export type RoleFilter = (typeof ROLE_FILTERS)[number]['value']
 export type PeopleFilters = { role: RoleFilter | null; state: string | null; q: string }
 
 /** Reads `/people?role=reporter&state=punjab&q=pune` safely. Unknown values are ignored. */
-export function parsePeopleFilters(params: Record<string, string | string[] | undefined>): PeopleFilters {
+export function parsePeopleFilters(
+  params: Record<string, string | string[] | undefined>,
+): PeopleFilters {
   const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? ''
   const role = first(params.role).toLowerCase()
   const state = first(params.state).trim().toLowerCase()
@@ -45,7 +50,10 @@ export function filterPeople<T extends FilterablePerson>(people: T[], filters: P
     if (filters.role && p.roleType !== filters.role) return false
     if (filters.state && (loc?.state ?? '').toLowerCase() !== filters.state) return false
     if (terms.length) {
-      const haystack = [p.fullName, p.designation, loc?.name, loc?.state].filter(Boolean).join(' ').toLowerCase()
+      const haystack = [p.fullName, p.designation, loc?.name, loc?.state]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
       return terms.every((t) => haystack.includes(t))
     }
     return true

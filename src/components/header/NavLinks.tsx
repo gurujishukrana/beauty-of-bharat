@@ -11,7 +11,10 @@ export type NavLink = { label: string; url: string }
 /** Whether `url` is the current section. News stays active on articles and category pages. */
 export function isActive(url: string, pathname: string): boolean {
   if (url === '/') return pathname === '/'
-  if (url === '/news') return pathname === '/news' || pathname.startsWith('/news/') || pathname.startsWith('/category/')
+  if (url === '/news')
+    return (
+      pathname === '/news' || pathname.startsWith('/news/') || pathname.startsWith('/category/')
+    )
   return pathname === url || pathname.startsWith(`${url}/`)
 }
 

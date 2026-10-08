@@ -211,7 +211,12 @@
   }
 
   /* Simple prose for legal pages and person bios. */
-  .prose-simple > * + * {
+  .prose-simple :where(p, ul, ol, h2, h3) + :where(p, ul, ol, h2, h3) {
     margin-top: 22px;
   }
+}
+
+/* Without JavaScript, still reveal "Article link" when Correction is chosen. */
+.contact-form:has(select[name='topic'] option[value='correction']:checked) .article-field {
+  display: flex;
 }

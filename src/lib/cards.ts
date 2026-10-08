@@ -14,8 +14,9 @@ export const locationOf = (a: Pick<Article, 'location'>) => asObject<Location>(a
 export const authorsOf = (a: Pick<Article, 'authors'>) =>
   (a.authors ?? []).map((p) => asObject<Person>(p)).filter((p): p is Person => p !== null)
 
+/** "Ludhiana, Punjab"; just "Chandigarh" when the city and state share a name. */
 export const locationLabel = (l: Location | null | undefined) =>
-  l ? l.displayName || [l.name, l.state].filter(Boolean).join(', ') : ''
+  l ? [l.name, l.state && l.state !== l.name ? l.state : null].filter(Boolean).join(', ') : ''
 
 /** Serializable story summary used by every card and list component. */
 export type CardData = {

@@ -1,7 +1,7 @@
 import type {
   DefaultNodeTypes,
+  DefaultTypedEditorState,
   SerializedBlockNode,
-  SerializedEditorState,
   SerializedLinkNode,
 } from '@payloadcms/richtext-lexical'
 import {
@@ -74,9 +74,9 @@ export function RichText({
   data,
   className,
 }: {
-  data: SerializedEditorState | null | undefined
+  data: DefaultTypedEditorState | Record<string, unknown> | null | undefined
   className?: string
 }) {
   if (!data) return null
-  return <LexicalRichText data={data} converters={converters} className={className} disableContainer={false} />
+  return <LexicalRichText data={data as DefaultTypedEditorState} converters={converters} className={className} disableContainer={false} />
 }

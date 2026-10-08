@@ -1,0 +1,82 @@
+import type { Metadata, Viewport } from 'next'
+import { Libre_Franklin, Newsreader } from 'next/font/google'
+import type { ReactNode } from 'react'
+
+import { JsonLd } from '@/components/JsonLd'
+import { SiteHeader } from '@/components/header/SiteHeader'
+import { SiteFooter } from '@/components/SiteFooter'
+import { copy } from '@/lib/copy'
+import { organizationJsonLd, websiteJsonLd } from '@/lib/jsonld'
+import { getSiteSettings } from '@/lib/queries'
+import { getSiteUrl } from '@/lib/url'
+
+import './globals.css'
+
+const serif = Newsreader({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  display: 'swap',
+  variable: '--font-newsreader',
+})
+
+const sans = Libre_Franklin({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-libre-franklin',
+})
+
+// Pages are regenerated on demand when editors publish. This 5-minute fallback also picks up
+// stories published by the scheduler on servers where on-demand revalidation can't run.
+export const revalidate = 300
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings()
+  return {
+    metadataBase: new URL(getSiteUrl()),
+    title: { default: `${copy.siteName} — uplifting stories from ground zero`, template: `%s | ${copy.siteName}` },
+    description: settings.tagline,
+    applicationName: copy.siteName,
+    alternates: {
+      canonical: '/',
+      types: { 'application/rss+xml': [{ url: '/rss.xml', title: copy.siteName }] },
+    },
+    openGraph: {
+      type: 'website',
+      siteName: copy.siteName,
+      locale: 'en_IN',
+      title: copy.siteName,
+      description: settings.tagline,
+    },
+    twitter: { card: 'summary_large_image' },
+    formatDetection: { telephone: false },
+  }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+}
+
+export default async function FrontendLayout({ children }: { children: ReactNode }) {
+  const settings = await getSiteSettings()
+  return (
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+      <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-ink focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        >
+          {copy.skipToContent}
+        </a>
+        <SiteHeader />
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
+        <SiteFooter />
+        <JsonLd data={[organizationJsonLd(settings), websiteJsonLd()]} />
+      </body>
+    </html>
+  )
+}

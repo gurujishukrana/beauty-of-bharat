@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens. Values come from section 2 of the brief and the inline styles in
+ * design-reference/. Tailwind turns each --color-* into utilities (text-ink, bg-sand, border-rule …).
+ */
+@theme {
+  --color-*: initial;
+  --color-ink: #16161d;
+  --color-ink-2: #23232b;
+  --color-body: #3a3a44;
+  --color-muted: #4a4a55;
+  --color-subtle: #5b5b66;
+  --color-faint: #8a8a94;
+  --color-rule: #e6e3dc;
+  --color-field: #cfcbc2;
+  --color-chip: #d9d6ce;
+  --color-paper: #ffffff;
+  --color-sand: #f5f3ee;
+  --color-placeholder: #e7e1d5;
+  --color-placeholder-text: #5e5646;
+  --color-saffron: #f1923f;
+  --color-saffron-text: #c9701f;
+  --color-navy: #232357;
+  --color-navy-text: #d6d6e6;
+  --color-green: #108547;
+  --color-green-text: #0e7a41;
+  --color-footer: #121218;
+  --color-footer-text: #c9c9d2;
+  --color-footer-small: #9a9aa6;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-serif: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-libre-franklin), system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-xs: 2px;
+
+  /* Phone < 760px, tablet 760–1100px, desktop > 1100px. */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 760px;
+  --breakpoint-md: 1100px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-green);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: #f9d9b8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+}
+
+@utility kicker {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-green-text);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Article body typography (Lexical output). Sizes follow section 2.3 of the brief. */
+@layer components {
+  .article-body {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+
+  @media (min-width: 760px) {
+    .article-body {
+      font-size: 21px;
+    }
+  }
+
+  /* Every block sits in the 700px reading column; wide figures opt out to 940px. */
+  .article-body > * {
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .article-body > .is-wide {
+    max-width: 940px;
+  }
+
+  .article-body > p,
+  .article-body > ul,
+  .article-body > ol {
+    margin-block: 0 26px;
+  }
+
+  .article-body > h2 {
+    margin-block: 44px 16px;
+    font-size: 25px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .article-body > h3 {
+    margin-block: 36px 12px;
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 760px) {
+    .article-body > h2 {
+      font-size: 30px;
+    }
+    .article-body > h3 {
+      font-size: 24px;
+    }
+  }
+
+  .article-body ul {
+    list-style: disc;
+    padding-left: 1.4em;
+  }
+
+  .article-body ol {
+    list-style: decimal;
+    padding-left: 1.4em;
+  }
+
+  .article-body li {
+    margin-bottom: 8px;
+  }
+
+  .article-body a {
+    color: var(--color-green-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .article-body a:hover {
+    color: var(--color-green);
+  }
+
+  .article-body strong {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  /* Drop cap on the first paragraph of an article. */
+  .article-body.has-dropcap > p:first-of-type::first-letter {
+    float: left;
+    font-size: 74px;
+    line-height: 0.85;
+    padding: 6px 10px 0 0;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  /* Simple prose for legal pages and person bios. */
+  .prose-simple > * + * {
+    margin-top: 22px;
+  }
+}

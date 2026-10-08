@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Beauty of Bharat — People</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#16161D;text-decoration:none}
+a:hover{color:#108547}
+</style>
+</helmet>
+<div style="font-family: 'Libre Franklin', system-ui, sans-serif; color: #16161D; background: #FFFFFF; min-height: 100vh">
+
+<header>
+  <div style="display: flex; height: 4px">
+    <div style="flex: 1; background: #F1923F"></div>
+    <div style="flex: 1; background: #232357"></div>
+    <div style="flex: 1; background: #108547"></div>
+  </div>
+  <div style="border-bottom: 1px solid #E6E3DC">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 22px 40px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap">
+      <a href="Home.html" aria-label="Beauty of Bharat home" style="display: flex"><img src="../brand/logo-color.svg" alt="Beauty of Bharat" style="height: 34px; width: auto; display: block"></a>
+      <nav style="display: flex; align-items: center; gap: 32px; font-size: 15px; font-weight: 600; flex-wrap: wrap">
+        <a href="Home.html" style="padding: 10px 0">Home</a>
+        <a href="Home.html" style="padding: 10px 0">News</a>
+        <a href="People.html" style="color: #108547; border-bottom: 2px solid #108547; padding: 10px 0">People</a>
+        <a href="About.html" style="padding: 10px 0">About</a>
+        <a href="Contact.html" style="padding: 10px 0">Contact</a>
+        <button aria-label="Search" style="width: 44px; height: 44px; border: 1px solid #E6E3DC; background: #FFFFFF; border-radius: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #16161D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section style="max-width: 1280px; margin: 0 auto; padding: 64px 40px 40px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end">
+    <div style="flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0E7A41">Our team</div>
+      <h1 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 60px; line-height: 1.04; letter-spacing: -0.015em">The People Behind Beauty of Bharat</h1>
+      <p style="margin: 0; font-size: 18px; line-height: 1.6; color: #3A3A44; max-width: 640px">Our reporters, editors and photographers work from the places they write about. Everyone listed here has been issued an official Beauty of Bharat press card.</p>
+    </div>
+    <div style="flex: 1 1 320px; min-width: 0; border: 1px solid #E6E3DC; padding: 22px; display: flex; gap: 14px; align-items: flex-start">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E7A41" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 15px; font-weight: 700">Verify a press card</div>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #4A4A55">If someone says they represent Beauty of Bharat and they are not listed here, please <a href="Contact.html" style="color: #0E7A41; text-decoration: underline; text-underline-offset: 3px">let us know</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+    <div style="border-top: 2px solid #16161D; border-bottom: 1px solid #E6E3DC; padding: 16px 0; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+          <button style="font-family: inherit; font-size: 14px; font-weight: 500; padding: 10px 16px; border-radius: 22px; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.color}}; cursor: pointer; min-height: 44px">{{f.label}}</button>
+        </sc-for>
+      </div>
+      <label style="display: flex; align-items: center; gap: 10px; border: 1px solid #D9D6CE; padding: 0 14px; height: 44px; border-radius: 2px; min-width: 260px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B5B66" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search by name or location</span>
+        <input type="search" placeholder="Search by name or location" style="border: none; outline: none; font-family: inherit; font-size: 14px; flex: 1; background: transparent; color: #16161D">
+      </label>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 40px 40px 80px">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 48px 32px">
+      <sc-for list="{{people}}" as="p" hint-placeholder-count="8">
+        <article style="display: flex; flex-direction: column; gap: 14px">
+          <a href="Profile.html" style="display: block">
+            <div style="aspect-ratio: 4 / 5; background: {{p.tone}}; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: 'Newsreader', Georgia, serif; font-size: 56px; color: #6A6458">{{p.initials}}</div>
+          </a>
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #0E7A41"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"></path><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg>Press card · {{p.card}}</div>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 25px; line-height: 1.15"><a href="Profile.html">{{p.name}}</a></h2>
+            <div style="font-size: 14px; font-weight: 600; color: #3A3A44">{{p.role}}</div>
+            <div style="font-size: 13px; color: #5B5B66; display: flex; align-items: center; gap: 4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>{{p.place}}</div>
+          </div>
+          <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A4A55">{{p.bio}}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #E6E3DC; padding-top: 12px">
+            <a href="Profile.html" style="font-size: 14px; font-weight: 600; color: #0E7A41">View profile →</a>
+            <div style="display: flex; gap: 4px">
+              <a href="#" aria-label="Instagram" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: #5B5B66"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle></svg></a>
+              <a href="#" aria-label="X" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: #5B5B66"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l16 16M20 4L4 20"></path></svg></a>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+</main>
+
+<footer style="background: #121218; color: #C9C9D2">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 56px 40px 32px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <img src="../brand/logo-white.svg" alt="Beauty of Bharat" style="height: 28px; width: auto; align-self: flex-start">
+      <p style="margin: 0; font-size: 14px">A free newspaper telling uplifting stories about India from ground zero.</p>
+    </div>
+    <div style="display: flex; gap: 24px; font-size: 14px; flex-wrap: wrap"><a href="Home.html" style="color: #C9C9D2">Home</a><a href="Home.html" style="color: #C9C9D2">News</a><a href="People.html" style="color: #C9C9D2">People</a><a href="About.html" style="color: #C9C9D2">About</a><a href="Contact.html" style="color: #C9C9D2">Contact</a><a href="#" style="color: #C9C9D2">Privacy</a></div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const labels = ['Everyone', 'Editors', 'Reporters', 'Photographers', 'Punjab'];
+    return {
+      filters: labels.map((l, i) => ({ label: l, bg: i === 0 ? '#16161D' : '#FFFFFF', color: i === 0 ? '#FFFFFF' : '#16161D', border: i === 0 ? '#16161D' : '#D9D6CE' })),
+      people: [
+        { name: 'Rohit Bains', role: 'Founding Editor', place: 'Chandigarh', card: 'BOB/001', initials: 'RB', tone: '#E7E1D5', bio: 'Sets the editorial direction and edits every story before it is published.' },
+        { name: 'Harleen Kaur', role: 'Punjab Correspondent', place: 'Ludhiana, Punjab', card: 'BOB/004', initials: 'HK', tone: '#DDE3DC', bio: 'Reports on education, agriculture and community life across rural Punjab.' },
+        { name: 'Arjun Menon', role: 'Kerala Correspondent', place: 'Kochi, Kerala', card: 'BOB/007', initials: 'AM', tone: '#E1E0E8', bio: 'Covers coastal communities, traditional crafts and climate resilience.' },
+        { name: 'Priya Raghavan', role: 'Innovation Reporter', place: 'Pune, Maharashtra', card: 'BOB/009', initials: 'PR', tone: '#E9DFD3', bio: 'Writes about young inventors, startups and science that reaches villages.' },
+        { name: 'Imran Siddiqui', role: 'Bihar Correspondent', place: 'Patna, Bihar', card: 'BOB/011', initials: 'IS', tone: '#DCE2E4', bio: 'Follows stories of public institutions that work — schools, libraries, clinics.' },
+        { name: 'Ananya Sharma', role: 'Ground Reporter', place: 'Jaipur, Rajasthan', card: 'BOB/012', initials: 'AS', tone: '#E4E2D6', bio: 'Travels to villages and small towns for long-form ground reports.' },
+        { name: 'Temjen Ao', role: 'North-East Correspondent', place: 'Kohima, Nagaland', card: 'BOB/015', initials: 'TA', tone: '#E3DED2', bio: 'Reports on enterprise, culture and sport from the north-eastern states.' },
+        { name: 'Meera Iyer', role: 'Photo Editor', place: 'Bengaluru, Karnataka', card: 'BOB/003', initials: 'MI', tone: '#D9E1DF', bio: 'Leads the photography desk and works with reporters on every visual story.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Beauty of Bharat — About</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#16161D;text-decoration:none}
+a:hover{color:#108547}
+</style>
+</helmet>
+<div style="font-family: 'Libre Franklin', system-ui, sans-serif; color: #16161D; background: #FFFFFF; min-height: 100vh">
+
+<header>
+  <div style="display: flex; height: 4px">
+    <div style="flex: 1; background: #F1923F"></div>
+    <div style="flex: 1; background: #232357"></div>
+    <div style="flex: 1; background: #108547"></div>
+  </div>
+  <div style="border-bottom: 1px solid #E6E3DC">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 22px 40px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap">
+      <a href="Home.html" aria-label="Beauty of Bharat home" style="display: flex"><img src="../brand/logo-color.svg" alt="Beauty of Bharat" style="height: 34px; width: auto; display: block"></a>
+      <nav style="display: flex; align-items: center; gap: 32px; font-size: 15px; font-weight: 600; flex-wrap: wrap">
+        <a href="Home.html" style="padding: 10px 0">Home</a>
+        <a href="Home.html" style="padding: 10px 0">News</a>
+        <a href="People.html" style="padding: 10px 0">People</a>
+        <a href="About.html" style="color: #108547; border-bottom: 2px solid #108547; padding: 10px 0">About</a>
+        <a href="Contact.html" style="padding: 10px 0">Contact</a>
+        <button aria-label="Search" style="width: 44px; height: 44px; border: 1px solid #E6E3DC; background: #FFFFFF; border-radius: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #16161D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section style="max-width: 1280px; margin: 0 auto; padding: 88px 40px 72px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+    <div style="flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0E7A41">About Beauty of Bharat</div>
+      <h1 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 64px; line-height: 1.04; letter-spacing: -0.015em">A free newspaper focused on uplifting stories about India, from ground zero.</h1>
+    </div>
+    <div style="flex: 1 1 240px; display: flex; justify-content: center">
+      <img src="../brand/mark-color.svg" alt="" style="width: 220px; height: 220px">
+    </div>
+  </section>
+
+  <section style="border-top: 1px solid #E6E3DC; border-bottom: 1px solid #E6E3DC">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 64px 40px; display: flex; flex-wrap: wrap; gap: 56px">
+      <div style="flex: 1 1 280px; min-width: 0">
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 32px; line-height: 1.15">Why we exist</h2>
+      </div>
+      <div style="flex: 2 1 520px; min-width: 0; font-family: 'Newsreader', Georgia, serif; font-size: 21px; line-height: 1.65; color: #23232B; display: flex; flex-direction: column; gap: 22px">
+        <p style="margin: 0">Across India, people are building, teaching, healing and creating in ways that rarely reach the front page. Beauty of Bharat exists to report those stories — carefully, accurately and from the places where they happen.</p>
+        <p style="margin: 0">We are free to read, with no paywall and no subscription. Our reporters are named, carry official press cards, and are listed publicly so readers always know who is behind a story.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 72px 40px">
+    <div style="border-top: 2px solid #16161D; padding-top: 18px; margin-bottom: 36px"><h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 32px">What we cover</h2></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 40px 48px">
+      <sc-for list="{{cover}}" as="c" hint-placeholder-count="6">
+        <div style="display: flex; gap: 18px; align-items: flex-start">
+          <span style="font-family: 'Newsreader', Georgia, serif; font-size: 30px; line-height: 1; color: {{c.color}}; width: 36px; flex-shrink: 0">{{c.n}}</span>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <h3 style="margin: 0; font-size: 18px; font-weight: 700">{{c.title}}</h3>
+            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4A55">{{c.text}}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background: #F5F3EE">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 72px 40px">
+      <div style="border-top: 2px solid #16161D; padding-top: 18px; margin-bottom: 36px"><h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 32px">How we work</h2></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 32px">
+        <sc-for list="{{principles}}" as="p" hint-placeholder-count="4">
+          <div style="background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 10px">
+            <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 24px">{{p.title}}</h3>
+            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4A55">{{p.text}}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1280px; margin: 0 auto; padding: 72px 40px 88px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+    <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 500; font-size: 36px; line-height: 1.15; max-width: 640px">Read the stories. Meet the people who report them.</h2>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap">
+      <a href="Home.html" style="background: #16161D; color: #FFFFFF; padding: 14px 24px; font-size: 15px; font-weight: 600; border-radius: 2px">Read the latest</a>
+      <a href="People.html" style="border: 1.5px solid #16161D; padding: 13px 24px; font-size: 15px; font-weight: 600; border-radius: 2px">Meet the team</a>
+    </div>
+  </section>
+</main>
+
+<footer style="background: #121218; color: #C9C9D2">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 56px 40px 32px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <img src="../brand/logo-white.svg" alt="Beauty of Bharat" style="height: 28px; width: auto; align-self: flex-start">
+      <p style="margin: 0; font-size: 14px">A free newspaper telling uplifting stories about India from ground zero.</p>
+    </div>
+    <div style="display: flex; gap: 24px; font-size: 14px; flex-wrap: wrap"><a href="Home.html" style="color: #C9C9D2">Home</a><a href="Home.html" style="color: #C9C9D2">News</a><a href="People.html" style="color: #C9C9D2">People</a><a href="About.html" style="color: #C9C9D2">About</a><a href="Contact.html" style="color: #C9C9D2">Contact</a><a href="#" style="color: #C9C9D2">Privacy</a></div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const colors = ['#C9701F', '#232357', '#0E7A41'];
+    const cover = [
+      ['People doing meaningful work', 'Teachers, doctors, farmers, artisans and volunteers making a difference where they live.'],
+      ['Communities creating change', 'Villages, neighbourhoods and groups solving problems together.'],
+      ['Local stories, national attention', 'Stories from small towns that deserve to be read across the country.'],
+      ['Indian achievements', 'Milestones in sport, science, education and enterprise, big and small.'],
+      ['Positive developments', 'Schools, roads, clinics and projects that are working — and why.'],
+      ['Overlooked stories', 'The reporting mainstream media often misses.']
+    ];
+    return {
+      cover: cover.map((c, i) => ({ n: String(i + 1).padStart(2, '0'), title: c[0], text: c[1], color: colors[i % 3] })),
+      principles: [
+        { title: 'Always free', text: 'No paywall, no subscriptions, no paid content. Every story is open to every reader.' },
+        { title: 'From ground zero', text: 'Our reporters go to the places they write about and speak to the people involved.' },
+        { title: 'Named and accountable', text: 'Every story carries a byline, and every reporter is listed with their press card.' },
+        { title: 'Open corrections', text: 'When we get something wrong, we fix it and say so. Anyone can request a correction.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

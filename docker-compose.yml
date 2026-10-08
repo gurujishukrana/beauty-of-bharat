@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bob
+      POSTGRES_PASSWORD: bob
+      POSTGRES_DB: beautyofbharat
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U bob -d beautyofbharat']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Production-style container for the app (see DEPLOY.md). Not needed for `pnpm dev`.
+  app:
+    profiles: ['app']
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URI: postgres://bob:bob@postgres:5432/beautyofbharat
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,5 +1,7 @@
 import type { Media } from '@/payload-types'
 
+import { getSiteUrl } from './url'
+
 export type ImageSize = 'thumb' | 'card' | 'feature' | 'hero' | 'portrait' | 'og'
 
 /** Serializable image data passed to components (server → client safe). */
@@ -25,7 +27,7 @@ export function isMedia(value: unknown): value is Media {
 export function toImage(value: unknown, size?: ImageSize): ImageData | null {
   if (!isMedia(value) || !value.url) return null
   const variant = size ? value.sizes?.[size] : undefined
-  const url = variant?.url || value.url
+  const url = toRelative(variant?.url || value.url)
   const width = (variant?.url && variant.width) || value.width || 1600
   const height = (variant?.url && variant.height) || value.height || 1000
   return {
@@ -37,4 +39,10 @@ export function toImage(value: unknown, size?: ImageSize): ImageData | null {
     credit: value.credit,
     position: `${value.focalX ?? 50}% ${value.focalY ?? 50}%`,
   }
+}
+
+/** Payload returns absolute URLs for local files; next/image wants them relative. */
+function toRelative(url: string): string {
+  const site = getSiteUrl()
+  return url.startsWith(site) ? url.slice(site.length) || '/' : url
 }

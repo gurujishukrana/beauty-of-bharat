@@ -1,6 +1,6 @@
 import type { Article, Category, Location, Person } from '@/payload-types'
 
-import { formatShortDate } from './dates'
+import { formatDate, formatShortDate } from './dates'
 import { toImage, type ImageData } from './media'
 import { joinNames } from './text'
 import { routes } from './url'
@@ -32,6 +32,8 @@ export type CardData = {
   city: string
   authors: string
   date: string
+  /** "8 October 2026" */
+  dateLong: string
   dateISO: string
   readTime: number
   image: ImageData | null
@@ -53,6 +55,7 @@ export function toCard(article: Omit<Article, 'body' | 'plainText'>): CardData {
     city: location?.name ?? '',
     authors: joinNames(authorsOf(article).map((p) => p.fullName)),
     date: formatShortDate(date),
+    dateLong: formatDate(date),
     dateISO: new Date(date).toISOString(),
     readTime: article.readTime ?? 1,
     image: toImage(article.heroImage, 'card'),

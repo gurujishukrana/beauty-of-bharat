@@ -13,7 +13,9 @@ export async function LegalPage({ slug }: { slug: string }) {
     <>
       {draft && <PreviewBar path={`/${slug}`} />}
       <header className="mx-auto flex max-w-[700px] flex-col gap-3 px-4 pt-10 pb-6 sm:box-content sm:px-10 sm:pt-16 sm:pb-10">
-        <h1 className="font-serif text-[36px] leading-[1.06] font-medium tracking-[-0.015em] sm:text-[52px]">{page.title}</h1>
+        <h1 className="font-serif text-[36px] leading-[1.06] font-medium tracking-[-0.015em] sm:text-[52px]">
+          {page.title}
+        </h1>
         <p className="text-[13px] text-subtle">
           Last updated <time dateTime={page.updatedAt}>{formatDate(page.updatedAt)}</time>
         </p>

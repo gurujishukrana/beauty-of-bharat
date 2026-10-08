@@ -67,7 +67,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: path,
       images: [
         photo
-          ? { url: absoluteUrl(photo.url), width: photo.width, height: photo.height, alt: person.fullName }
+          ? {
+              url: absoluteUrl(photo.url),
+              width: photo.width,
+              height: photo.height,
+              alt: person.fullName,
+            }
           : { url: absoluteUrl(`${path}/og`), width: 1200, height: 630, alt: person.fullName },
       ],
     },
@@ -112,7 +117,10 @@ export default async function ProfilePage({ params }: Props) {
             priority
             className="w-full text-[80px]"
           />
-          <section aria-label={copy.profile.officialCard} className="flex flex-col gap-3.5 border border-rule p-5">
+          <section
+            aria-label={copy.profile.officialCard}
+            className="flex flex-col gap-3.5 border border-rule p-5"
+          >
             <div className="flex items-center gap-2.5">
               <Mark size={28} />
               <div className="flex flex-col">
@@ -127,7 +135,9 @@ export default async function ProfilePage({ params }: Props) {
               </div>
               <div className="flex flex-col gap-0.5">
                 <dt className="text-subtle">{copy.profile.status}</dt>
-                <dd className="font-semibold text-green-text capitalize">{person.pressCardStatus}</dd>
+                <dd className="font-semibold text-green-text capitalize">
+                  {person.pressCardStatus}
+                </dd>
               </div>
               {person.dateJoined ? (
                 <div className="flex flex-col gap-0.5">
@@ -171,7 +181,9 @@ export default async function ProfilePage({ params }: Props) {
                       className="inline-flex min-h-11 items-center gap-2 rounded-xs border border-chip px-4 text-sm font-medium text-ink"
                     >
                       <Icon />
-                      {s.platform === 'email' ? copy.profile.email(name) : SOCIAL_LABELS[s.platform]}
+                      {s.platform === 'email'
+                        ? copy.profile.email(name)
+                        : SOCIAL_LABELS[s.platform]}
                     </a>
                   </li>
                 )

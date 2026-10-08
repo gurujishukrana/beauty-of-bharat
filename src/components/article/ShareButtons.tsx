@@ -2,7 +2,14 @@
 
 import { useState } from 'react'
 
-import { CheckIcon, FacebookIcon, LinkIcon, ShareIcon, WhatsAppIcon, XIcon } from '@/components/Icons'
+import {
+  CheckIcon,
+  FacebookIcon,
+  LinkIcon,
+  ShareIcon,
+  WhatsAppIcon,
+  XIcon,
+} from '@/components/Icons'
 import { copy } from '@/lib/copy'
 import { cn } from '@/lib/cn'
 
@@ -42,16 +49,39 @@ export function ShareButtons({ url, title }: Props) {
   return (
     <div className="flex items-center gap-2">
       <span className="mr-1 text-[13px] text-subtle">{copy.article.share}</span>
-      <a href={links.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={copy.article.shareOn('WhatsApp')} className={round}>
+      <a
+        href={links.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={copy.article.shareOn('WhatsApp')}
+        className={round}
+      >
         <WhatsAppIcon />
       </a>
-      <a href={links.x} target="_blank" rel="noopener noreferrer" aria-label={copy.article.shareOn('X')} className={round}>
+      <a
+        href={links.x}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={copy.article.shareOn('X')}
+        className={round}
+      >
         <XIcon />
       </a>
-      <a href={links.facebook} target="_blank" rel="noopener noreferrer" aria-label={copy.article.shareOn('Facebook')} className={round}>
+      <a
+        href={links.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={copy.article.shareOn('Facebook')}
+        className={round}
+      >
         <FacebookIcon />
       </a>
-      <button type="button" onClick={copyLink} aria-label={copied ? copy.article.copied : copy.article.copyLink} className={round}>
+      <button
+        type="button"
+        onClick={copyLink}
+        aria-label={copied ? copy.article.copied : copy.article.copyLink}
+        className={round}
+      >
         {copied ? <CheckIcon /> : <LinkIcon />}
       </button>
       <span role="status" className="sr-only">
@@ -91,16 +121,35 @@ export function NativeShareButton({ url, title }: Props) {
 export function ShareRow({ url, title, className }: Props & { className?: string }) {
   const links = shareLinks({ url, title })
   const { copied, copyLink } = useCopy(url)
-  const cell = 'flex h-12 items-center justify-center border border-rule bg-paper text-xs font-semibold text-ink'
+  const cell =
+    'flex h-12 items-center justify-center border border-rule bg-paper text-xs font-semibold text-ink'
   return (
     <div className={cn('grid grid-cols-4 gap-2', className)}>
-      <a href={links.whatsapp} target="_blank" rel="noopener noreferrer" className={cell} aria-label={copy.article.shareOn('WhatsApp')}>
+      <a
+        href={links.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cell}
+        aria-label={copy.article.shareOn('WhatsApp')}
+      >
         WhatsApp
       </a>
-      <a href={links.x} target="_blank" rel="noopener noreferrer" className={cell} aria-label={copy.article.shareOn('X')}>
+      <a
+        href={links.x}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cell}
+        aria-label={copy.article.shareOn('X')}
+      >
         X
       </a>
-      <a href={links.facebook} target="_blank" rel="noopener noreferrer" className={cell} aria-label={copy.article.shareOn('Facebook')}>
+      <a
+        href={links.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cell}
+        aria-label={copy.article.shareOn('Facebook')}
+      >
         Facebook
       </a>
       <button type="button" onClick={copyLink} className={cell}>

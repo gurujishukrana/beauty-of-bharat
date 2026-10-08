@@ -13,7 +13,9 @@ export async function feedArticles({ limit, since }: { limit: number; since?: Da
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'articles',
-    where: since ? { and: [indexableArticles, { publishedAt: { greater_than_equal: since.toISOString() } }] } : indexableArticles,
+    where: since
+      ? { and: [indexableArticles, { publishedAt: { greater_than_equal: since.toISOString() } }] }
+      : indexableArticles,
     sort: '-publishedAt',
     limit,
     depth: 1,
@@ -42,7 +44,13 @@ export async function sitemapData() {
       pagination: false,
       select: { slug: true, updatedAt: true },
     }),
-    payload.find({ collection: 'categories', limit: 200, depth: 0, pagination: false, select: { slug: true, updatedAt: true } }),
+    payload.find({
+      collection: 'categories',
+      limit: 200,
+      depth: 0,
+      pagination: false,
+      select: { slug: true, updatedAt: true },
+    }),
     payload.find({
       collection: 'pages',
       where: { and: [publishedWhere, { 'seo.noIndex': { not_equals: true } }] },
@@ -52,7 +60,12 @@ export async function sitemapData() {
       select: { slug: true, updatedAt: true },
     }),
   ])
-  return { articles: articles.docs, people: people.docs, categories: categories.docs, pages: pages.docs }
+  return {
+    articles: articles.docs,
+    people: people.docs,
+    categories: categories.docs,
+    pages: pages.docs,
+  }
 }
 
 export function escapeXml(value: string): string {

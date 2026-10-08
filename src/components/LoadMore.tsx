@@ -66,7 +66,12 @@ export function LoadMore({
         {pending ? copy.home.loading : cards.length ? `${cards.length} more stories loaded` : ''}
       </p>
       {hasMore && (
-        <div className={cn('mt-5 flex sm:mt-12', align === 'center' ? 'justify-center' : 'justify-start sm:mt-7')}>
+        <div
+          className={cn(
+            'mt-5 flex sm:mt-12',
+            align === 'center' ? 'justify-center' : 'justify-start sm:mt-7',
+          )}
+        >
           <Link
             href={fallbackHref}
             onClick={load}

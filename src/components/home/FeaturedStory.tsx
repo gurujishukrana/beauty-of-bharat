@@ -19,15 +19,25 @@ export function FeaturedStory({
 }) {
   const image = toImage(article.heroImage, 'feature')
   return (
-    <section className="container-site pt-[18px] pb-7 sm:pt-7 sm:pb-14" aria-labelledby="featured-story">
+    <section
+      className="container-site pt-[18px] pb-7 sm:pt-7 sm:pb-14"
+      aria-labelledby="featured-story"
+    >
       <div className="flex flex-wrap items-stretch gap-3.5 sm:gap-10 sm:border-t-2 sm:border-ink sm:pt-7">
-        <Link href={card.href} className="block min-w-0 flex-[2_1_560px]" tabIndex={-1} aria-hidden="true">
+        <Link
+          href={card.href}
+          className="block min-w-0 flex-[2_1_560px]"
+          tabIndex={-1}
+          aria-hidden="true"
+        >
           <MediaImage
             image={image}
             aspect="3/2"
             sizes="(max-width: 759px) 100vw, (max-width: 1280px) 64vw, 800px"
             priority
-            placeholderLabel={card.place ? `${copy.home.featuredPhoto} · ${card.place}` : copy.home.featuredPhoto}
+            placeholderLabel={
+              card.place ? `${copy.home.featuredPhoto} · ${card.place}` : copy.home.featuredPhoto
+            }
             className="max-sm:aspect-[4/3]!"
           />
         </Link>
@@ -41,7 +51,9 @@ export function FeaturedStory({
               {card.title}
             </Link>
           </h2>
-          <p className="text-base leading-normal text-body sm:text-[17px] sm:leading-[1.55]">{card.deck}</p>
+          <p className="text-base leading-normal text-body sm:text-[17px] sm:leading-[1.55]">
+            {card.deck}
+          </p>
           <p className="flex flex-wrap gap-2 text-[13px] text-subtle">
             {card.authors ? (
               <>

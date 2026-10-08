@@ -8,7 +8,8 @@ export async function POST(req: Request): Promise<Response> {
   } catch {
     return new Response(null, { status: 400 })
   }
-  if (typeof slug !== 'string' || !/^[a-z0-9-]{1,120}$/.test(slug)) return new Response(null, { status: 400 })
+  if (typeof slug !== 'string' || !/^[a-z0-9-]{1,120}$/.test(slug))
+    return new Response(null, { status: 400 })
 
   const settings = await getSiteSettings()
   if (settings.homepage?.mostReadMode !== 'views') return new Response(null, { status: 204 })
@@ -41,7 +42,11 @@ export async function POST(req: Request): Promise<Response> {
     })
   } else {
     try {
-      await payload.create({ collection: 'articleViews', data: { article: article.id, day, count: 1 }, context })
+      await payload.create({
+        collection: 'articleViews',
+        data: { article: article.id, day, count: 1 },
+        context,
+      })
     } catch {
       // Another request created today's row first; the unique index keeps one row per day.
     }

@@ -25,8 +25,16 @@ function FieldError({ id, message }: { id: string; message?: string }) {
  * stays on the page, shows inline errors and a success message, and reveals "Article link"
  * only for corrections.
  */
-export function ContactForm({ initialTopic, initialArticle }: { initialTopic: Topic; initialArticle: string }) {
-  const [state, action, pending] = useActionState<ContactState, FormData>(submitContact, { status: 'idle' })
+export function ContactForm({
+  initialTopic,
+  initialArticle,
+}: {
+  initialTopic: Topic
+  initialArticle: string
+}) {
+  const [state, action, pending] = useActionState<ContactState, FormData>(submitContact, {
+    status: 'idle',
+  })
   const errors = state.status === 'error' ? state.errors : {}
   const values = state.status === 'error' ? state.values : null
   const [topic, setTopic] = useState<string>(values?.topic ?? initialTopic)
@@ -41,7 +49,12 @@ export function ContactForm({ initialTopic, initialArticle }: { initialTopic: To
 
   if (state.status === 'success') {
     return (
-      <div ref={successRef} tabIndex={-1} role="status" className="flex flex-col gap-3 bg-sand p-7 outline-none">
+      <div
+        ref={successRef}
+        tabIndex={-1}
+        role="status"
+        className="flex flex-col gap-3 bg-sand p-7 outline-none"
+      >
         <h2 className="font-serif text-[26px] font-medium">{copy.contact.successTitle}</h2>
         <p className="text-[15px] leading-[1.6] text-body">{copy.contact.successText}</p>
         <div>
@@ -57,12 +70,15 @@ export function ContactForm({ initialTopic, initialArticle }: { initialTopic: To
     )
   }
 
-  const describedBy = (name: string) => (errors[name as keyof typeof errors] ? `${name}-error` : undefined)
+  const describedBy = (name: string) =>
+    errors[name as keyof typeof errors] ? `${name}-error` : undefined
   const errorCount = Object.keys(errors).length
 
   return (
     <form action={action} noValidate className="contact-form flex flex-col gap-[18px]">
-      <h2 className="mb-1 font-serif text-[28px] font-medium sm:text-[30px]">{copy.contact.formTitle}</h2>
+      <h2 className="mb-1 font-serif text-[28px] font-medium sm:text-[30px]">
+        {copy.contact.formTitle}
+      </h2>
 
       <div ref={summaryRef} tabIndex={-1} aria-live="assertive" className="outline-none">
         {errorCount > 0 ? (
@@ -130,7 +146,12 @@ export function ContactForm({ initialTopic, initialArticle }: { initialTopic: To
         <FieldError id="topic-error" message={errors.topic} />
       </label>
 
-      <label className={cn('article-field flex flex-col gap-1.5 text-sm font-semibold', topic !== 'correction' && 'hidden')}>
+      <label
+        className={cn(
+          'article-field flex flex-col gap-1.5 text-sm font-semibold',
+          topic !== 'correction' && 'hidden',
+        )}
+      >
         {copy.contact.articleUrl}
         <span className="text-[13px] font-normal text-subtle" id="articleUrl-hint">
           {copy.contact.articleUrlHint}
@@ -141,7 +162,9 @@ export function ContactForm({ initialTopic, initialArticle }: { initialTopic: To
           inputMode="url"
           defaultValue={values?.articleUrl ?? initialArticle}
           aria-invalid={Boolean(errors.articleUrl)}
-          aria-describedby={['articleUrl-hint', describedBy('articleUrl')].filter(Boolean).join(' ')}
+          aria-describedby={['articleUrl-hint', describedBy('articleUrl')]
+            .filter(Boolean)
+            .join(' ')}
           className={input}
         />
         <FieldError id="articleUrl-error" message={errors.articleUrl} />
@@ -163,7 +186,10 @@ export function ContactForm({ initialTopic, initialArticle }: { initialTopic: To
 
       {siteKey ? (
         <>
-          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            strategy="lazyOnload"
+          />
           <div className="cf-turnstile" data-sitekey={siteKey} data-theme="light" />
         </>
       ) : null}

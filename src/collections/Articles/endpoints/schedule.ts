@@ -18,7 +18,10 @@ export const scheduleEndpoint: Endpoint = {
     const body = (await req.json?.().catch(() => ({}))) as { publishAt?: string }
     const publishAt = new Date(body?.publishAt ?? '')
     if (!Number.isInteger(id) || Number.isNaN(publishAt.getTime())) {
-      return Response.json({ error: 'Send an article id and a valid publishAt date.' }, { status: 400 })
+      return Response.json(
+        { error: 'Send an article id and a valid publishAt date.' },
+        { status: 400 },
+      )
     }
     await req.payload.findByID({ collection: 'articles', id, draft: true, req })
     const job = await req.payload.jobs.queue({

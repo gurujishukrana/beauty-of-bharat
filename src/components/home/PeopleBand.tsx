@@ -32,10 +32,14 @@ export function PeopleBand({ people }: { people: Person[] }) {
         </div>
         <ul className="no-scrollbar flex min-w-0 flex-[1.4_1_480px] gap-3.5 overflow-x-auto py-1.5 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(110px,1fr))] sm:gap-6 md:grid-cols-5 sm:overflow-visible">
           {people.map((person) => {
-            const city = typeof person.location === 'object' && person.location ? person.location.name : ''
+            const city =
+              typeof person.location === 'object' && person.location ? person.location.name : ''
             return (
               <li key={person.id} className="w-[78px] shrink-0 sm:w-auto">
-                <Link href={routes.person(person.slug)} className="group flex flex-col items-center gap-2 sm:gap-2.5">
+                <Link
+                  href={routes.person(person.slug)}
+                  className="group flex flex-col items-center gap-2 sm:gap-2.5"
+                >
                   <Avatar
                     name={person.fullName}
                     image={toImage(person.photo, 'portrait')}
@@ -45,7 +49,11 @@ export function PeopleBand({ people }: { people: Person[] }) {
                   <span className="text-center text-xs leading-[1.3] font-semibold text-ink group-hover:text-green sm:text-sm">
                     {person.fullName}
                   </span>
-                  {city ? <span className="-mt-1.5 text-center text-xs text-subtle max-sm:hidden">{city}</span> : null}
+                  {city ? (
+                    <span className="-mt-1.5 text-center text-xs text-subtle max-sm:hidden">
+                      {city}
+                    </span>
+                  ) : null}
                 </Link>
               </li>
             )

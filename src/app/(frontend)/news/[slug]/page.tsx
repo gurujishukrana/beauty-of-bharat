@@ -20,7 +20,12 @@ import { formatDate, formatShortDate } from '@/lib/dates'
 import { articleJsonLd, breadcrumbJsonLd } from '@/lib/jsonld'
 import { toImage } from '@/lib/media'
 import { isPublicPerson } from '@/lib/people'
-import { getArticleBySlug, getPayloadClient, getRelatedArticles, getSiteSettings } from '@/lib/queries'
+import {
+  getArticleBySlug,
+  getPayloadClient,
+  getRelatedArticles,
+  getSiteSettings,
+} from '@/lib/queries'
 import { findRedirect } from '@/lib/redirects'
 import { absoluteUrl, correctionUrl, routes } from '@/lib/url'
 import type { Category } from '@/payload-types'
@@ -55,7 +60,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = article.seo?.metaDescription || article.deck
   const title = article.seo?.metaTitle || article.title
   const images = ogImage
-    ? [{ url: absoluteUrl(ogImage.url), width: ogImage.width, height: ogImage.height, alt: ogImage.alt }]
+    ? [
+        {
+          url: absoluteUrl(ogImage.url),
+          width: ogImage.width,
+          height: ogImage.height,
+          alt: ogImage.alt,
+        },
+      ]
     : [{ url: absoluteUrl(`${path}/og`), width: 1200, height: 630, alt: article.title }]
   return {
     title,
@@ -95,14 +107,22 @@ export default async function ArticlePage({ params }: Props) {
   const hero = toImage(article.heroImage, 'hero')
   const published = article.publishedAt || article.createdAt
   const showUpdated =
-    article.updatedNote && new Date(article.updatedAt).getTime() - new Date(published).getTime() > 60_000
+    article.updatedNote &&
+    new Date(article.updatedAt).getTime() - new Date(published).getTime() > 60_000
   const related = (await getRelatedArticles(article)).map(toCard)
   const tags = [
     ...[category, ...(article.categories ?? [])].filter(
-      (c, i, all): c is Category => typeof c === 'object' && c !== null && all.findIndex((x) => typeof x === 'object' && x?.id === c.id) === i,
+      (c, i, all): c is Category =>
+        typeof c === 'object' &&
+        c !== null &&
+        all.findIndex((x) => typeof x === 'object' && x?.id === c.id) === i,
     ),
   ]
-  const ogUrl = absoluteUrl(toImage(article.seo?.ogImage, 'og')?.url ?? toImage(article.heroImage, 'og')?.url ?? `${path}/og`)
+  const ogUrl = absoluteUrl(
+    toImage(article.seo?.ogImage, 'og')?.url ??
+      toImage(article.heroImage, 'og')?.url ??
+      `${path}/og`,
+  )
 
   const bylineNames = authors.map((p) =>
     isPublicPerson(p) ? (
@@ -131,7 +151,10 @@ export default async function ArticlePage({ params }: Props) {
                 <>
                   <li aria-hidden="true">/</li>
                   <li>
-                    <Link href={routes.category(category.slug)} className="font-semibold text-green-text">
+                    <Link
+                      href={routes.category(category.slug)}
+                      className="font-semibold text-green-text"
+                    >
                       {category.name}
                     </Link>
                   </li>
@@ -143,7 +166,9 @@ export default async function ArticlePage({ params }: Props) {
           <h1 className="font-serif text-[33px] leading-[1.08] font-medium sm:text-[56px] sm:leading-[1.05] sm:tracking-[-0.015em]">
             {article.title}
           </h1>
-          <p className="font-serif text-[19px] leading-[1.4] text-body sm:text-[23px]">{article.deck}</p>
+          <p className="font-serif text-[19px] leading-[1.4] text-body sm:text-[23px]">
+            {article.deck}
+          </p>
 
           <div className="mt-0 flex flex-wrap items-center justify-between gap-4 border-y border-rule py-3 sm:mt-2 sm:py-4">
             <div className="flex items-center gap-2.5 sm:gap-3">
@@ -160,7 +185,11 @@ export default async function ArticlePage({ params }: Props) {
                   <span className="max-sm:hidden">{copy.article.by} </span>
                   {bylineNames.length > 1
                     ? bylineNames.flatMap((node, i) => [
-                        i > 0 ? (i === bylineNames.length - 1 ? ` ${copy.article.and} ` : ', ') : null,
+                        i > 0
+                          ? i === bylineNames.length - 1
+                            ? ` ${copy.article.and} `
+                            : ', '
+                          : null,
                         node,
                       ])
                     : bylineNames}
@@ -174,10 +203,14 @@ export default async function ArticlePage({ params }: Props) {
                     <>
                       {' '}
                       · {copy.article.updated}{' '}
-                      <time dateTime={new Date(article.updatedAt).toISOString()}>{formatDate(article.updatedAt)}</time>
+                      <time dateTime={new Date(article.updatedAt).toISOString()}>
+                        {formatDate(article.updatedAt)}
+                      </time>
                     </>
                   ) : null}
-                  {location ? <span className="max-sm:hidden"> · {locationLabel(location)}</span> : null}
+                  {location ? (
+                    <span className="max-sm:hidden"> · {locationLabel(location)}</span>
+                  ) : null}
                   {' · '}
                   {copy.article.minRead(article.readTime ?? 1)}
                 </span>
@@ -243,7 +276,9 @@ export default async function ArticlePage({ params }: Props) {
           <ShareRow url={url} title={article.title} className="sm:hidden" />
           <Link href={correctionUrl(url)} className="text-[13px] text-subtle">
             {copy.article.spottedError}{' '}
-            <span className="underline underline-offset-[3px]">{copy.article.requestCorrection}</span>
+            <span className="underline underline-offset-[3px]">
+              {copy.article.requestCorrection}
+            </span>
           </Link>
         </footer>
       </article>
@@ -263,7 +298,10 @@ export default async function ArticlePage({ params }: Props) {
                 <ArticleCard key={card.id} card={card} variant="related" compactOnMobile />
               ))}
             </div>
-            <Link href={routes.news} className="mt-[18px] block text-sm font-semibold text-green-text sm:hidden">
+            <Link
+              href={routes.news}
+              className="mt-[18px] block text-sm font-semibold text-green-text sm:hidden"
+            >
               {copy.article.backToNews}
             </Link>
           </div>

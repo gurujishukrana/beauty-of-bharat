@@ -40,7 +40,12 @@ export function FigCaption({
 }) {
   if (!caption && !credit) return null
   return (
-    <figcaption className={cn('mt-2 font-sans text-xs leading-[1.45] text-subtle sm:mt-3 sm:text-[13px] sm:leading-normal', className)}>
+    <figcaption
+      className={cn(
+        'mt-2 font-sans text-xs leading-[1.45] text-subtle sm:mt-3 sm:text-[13px] sm:leading-normal',
+        className,
+      )}
+    >
       {caption}
       {caption && credit ? ' ' : null}
       {credit ? <span className="text-faint">{credit}</span> : null}

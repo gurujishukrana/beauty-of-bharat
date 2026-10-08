@@ -51,7 +51,11 @@ export default async function HomePage() {
       </section>
 
       {data.featured && featuredCard ? (
-        <FeaturedStory article={data.featured} card={featuredCard} secondary={data.secondary.map(toCard)} />
+        <FeaturedStory
+          article={data.featured}
+          card={featuredCard}
+          secondary={data.secondary.map(toCard)}
+        />
       ) : (
         <section className="container-site py-14">
           <p className="text-body">{copy.news.empty}</p>
@@ -69,13 +73,20 @@ export default async function HomePage() {
           />
           <div className="grid grid-cols-1 gap-x-8 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] sm:gap-y-11">
             {data.latest.map((article, i) => (
-              <div key={article.id} className={i === 0 ? 'max-sm:border-b max-sm:border-rule max-sm:py-5' : undefined}>
+              <div
+                key={article.id}
+                className={i === 0 ? 'max-sm:border-b max-sm:border-rule max-sm:py-5' : undefined}
+              >
                 <ArticleCard card={toCard(article)} compactOnMobile={i > 0} />
               </div>
             ))}
           </div>
           {data.hasMore && (
-            <LoadMore exclude={data.excludeIds} fallbackHref={`${routes.news}?page=2`} limit={data.latest.length || 6} />
+            <LoadMore
+              exclude={data.excludeIds}
+              fallbackHref={`${routes.news}?page=2`}
+              limit={data.latest.length || 6}
+            />
           )}
         </section>
       )}
@@ -98,7 +109,9 @@ export default async function HomePage() {
                     <ArticleListItem
                       key={article.id}
                       card={card}
-                      label={[data.groundCategory?.name ?? card.category, card.place].filter(Boolean).join(' · ')}
+                      label={[data.groundCategory?.name ?? card.category, card.place]
+                        .filter(Boolean)
+                        .join(' · ')}
                     />
                   )
                 })}
@@ -107,7 +120,10 @@ export default async function HomePage() {
             {data.mostRead.length > 0 && (
               <aside className="min-w-0 flex-[1_1_300px]" aria-labelledby="most-read-title">
                 <div className="mb-2 border-t-2 border-ink pt-3.5 sm:pt-[18px]">
-                  <h2 id="most-read-title" className="font-serif text-[24px] font-medium sm:text-[28px]">
+                  <h2
+                    id="most-read-title"
+                    className="font-serif text-[24px] font-medium sm:text-[28px]"
+                  >
                     {copy.home.mostRead}
                   </h2>
                 </div>

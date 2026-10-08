@@ -25,7 +25,12 @@ const field = (data: FormData, name: string) => String(data.get(name) ?? '').sli
 
 async function clientIp(): Promise<string | null> {
   const h = await headers()
-  return h.get('cf-connecting-ip') || h.get('x-real-ip') || h.get('x-forwarded-for')?.split(',')[0]?.trim() || null
+  return (
+    h.get('cf-connecting-ip') ||
+    h.get('x-real-ip') ||
+    h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    null
+  )
 }
 
 export async function submitContact(_prev: ContactState, data: FormData): Promise<ContactState> {
@@ -111,7 +116,11 @@ export async function submitContact(_prev: ContactState, data: FormData): Promis
           .join('\n'),
       })
       if (sent) {
-        await payload.update({ collection: 'contactSubmissions', id: submission.id, data: { emailed: true } })
+        await payload.update({
+          collection: 'contactSubmissions',
+          id: submission.id,
+          data: { emailed: true },
+        })
       }
     }
   } catch (error) {

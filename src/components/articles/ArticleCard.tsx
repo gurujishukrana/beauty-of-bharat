@@ -17,7 +17,12 @@ type Props = {
 }
 
 /** Story card used in grids. Server and client safe (also rendered by "Load more"). */
-export function ArticleCard({ card, variant = 'grid', compactOnMobile, headingLevel = 'h3' }: Props) {
+export function ArticleCard({
+  card,
+  variant = 'grid',
+  compactOnMobile,
+  headingLevel = 'h3',
+}: Props) {
   const Heading = headingLevel
   const compact = compactOnMobile
   return (
@@ -32,18 +37,29 @@ export function ArticleCard({ card, variant = 'grid', compactOnMobile, headingLe
         <MediaImage
           image={card.image}
           aspect="16/10"
-          sizes={compact ? '(max-width: 759px) 96px, (max-width: 1100px) 50vw, 400px' : '(max-width: 759px) 100vw, (max-width: 1100px) 50vw, 400px'}
+          sizes={
+            compact
+              ? '(max-width: 759px) 96px, (max-width: 1100px) 50vw, 400px'
+              : '(max-width: 759px) 100vw, (max-width: 1100px) 50vw, 400px'
+          }
           placeholderLabel={variant === 'grid' && card.place ? `Photo · ${card.place}` : undefined}
           className={cn(compact && 'max-sm:aspect-square! max-sm:w-24 max-sm:shrink-0')}
         />
-        <div className={cn('flex flex-col gap-3', compact && 'max-sm:min-w-0 max-sm:flex-1 max-sm:gap-1.5')}>
+        <div
+          className={cn(
+            'flex flex-col gap-3',
+            compact && 'max-sm:min-w-0 max-sm:flex-1 max-sm:gap-1.5',
+          )}
+        >
           <p className={cn('kicker', compact && 'max-sm:text-[10px]')}>
             {kicker(card.category, card.place)}
           </p>
           <Heading
             className={cn(
               'font-serif font-medium text-ink group-hover:text-green',
-              variant === 'grid' ? 'text-[22px] leading-[1.2] sm:text-[23px]' : 'text-[22px] leading-[1.22]',
+              variant === 'grid'
+                ? 'text-[22px] leading-[1.2] sm:text-[23px]'
+                : 'text-[22px] leading-[1.22]',
               compact && 'max-sm:text-[18px] max-sm:leading-[1.25]',
             )}
           >

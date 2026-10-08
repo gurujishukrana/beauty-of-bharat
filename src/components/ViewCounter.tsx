@@ -11,7 +11,12 @@ export function ViewCounter({ slug }: { slug: string }) {
     if (navigator.doNotTrack === '1') return
     const body = JSON.stringify({ slug })
     if (!navigator.sendBeacon?.('/views', new Blob([body], { type: 'application/json' }))) {
-      fetch('/views', { method: 'POST', body, keepalive: true, headers: { 'Content-Type': 'application/json' } }).catch(() => {})
+      fetch('/views', {
+        method: 'POST',
+        body,
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+      }).catch(() => {})
     }
   }, [slug])
   return null

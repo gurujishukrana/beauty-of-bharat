@@ -15,7 +15,9 @@ export async function GET() {
       const url = absoluteUrl(routes.article(a.slug))
       const image = toImage(a.heroImage, 'feature')
       const category = categoryOf(a)
-      const authors = authorsOf(a).map((p) => p.fullName).join(', ')
+      const authors = authorsOf(a)
+        .map((p) => p.fullName)
+        .join(', ')
       return `    <item>
       <title>${escapeXml(a.title)}</title>
       <link>${url}</link>
@@ -44,6 +46,9 @@ ${items}
 </rss>
 `
   return new Response(xml, {
-    headers: { 'Content-Type': 'application/rss+xml; charset=utf-8', 'Cache-Control': 'public, s-maxage=900' },
+    headers: {
+      'Content-Type': 'application/rss+xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=900',
+    },
   })
 }

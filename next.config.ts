@@ -44,6 +44,8 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // The Docker image uses Next's self-contained server bundle.
+  output: process.env.NEXT_OUTPUT_STANDALONE ? 'standalone' : undefined,
   poweredByHeader: false,
   compress: true,
   images: {

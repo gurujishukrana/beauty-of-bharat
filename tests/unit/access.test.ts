@@ -4,7 +4,9 @@ import { describe, expect, it } from 'vitest'
 import { articleAccess, loggedInOrPublished, publicPeopleWhere } from '@/access'
 import { People } from '@/collections/People'
 
-const req = (user: Record<string, unknown> | null) => ({ req: { user } as unknown as PayloadRequest })
+const req = (user: Record<string, unknown> | null) => ({
+  req: { user } as unknown as PayloadRequest,
+})
 const reporter = { id: 3, role: 'reporter', person: 7 }
 const editor = { id: 2, role: 'editor' }
 const admin = { id: 1, role: 'admin' }
@@ -28,7 +30,9 @@ describe('article access', () => {
   })
 
   it('reporters without a linked profile cannot edit anything', () => {
-    expect(call(articleAccess.update, { ...req({ id: 9, role: 'reporter' }), data: draft })).toBe(false)
+    expect(call(articleAccess.update, { ...req({ id: 9, role: 'reporter' }), data: draft })).toBe(
+      false,
+    )
   })
 
   it('editors and admins can publish', () => {

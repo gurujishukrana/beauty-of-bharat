@@ -18,7 +18,10 @@ export function PageBlocks({ blocks }: { blocks: Block[] }) {
         switch (block.blockType) {
           case 'statementHero':
             return (
-              <section key={block.id ?? i} className="container-site flex flex-wrap items-center gap-10 pt-12 pb-12 sm:gap-14 sm:pt-[88px] sm:pb-[72px]">
+              <section
+                key={block.id ?? i}
+                className="container-site flex flex-wrap items-center gap-10 pt-12 pb-12 sm:gap-14 sm:pt-[88px] sm:pb-[72px]"
+              >
                 <div className="flex min-w-0 flex-[3_1_560px] flex-col gap-5 sm:gap-6">
                   {block.kicker ? <p className="kicker sm:text-xs">{block.kicker}</p> : null}
                   <h1 className="font-serif text-[36px] leading-[1.06] font-medium tracking-[-0.015em] sm:text-[64px] sm:leading-[1.04]">
@@ -49,20 +52,27 @@ export function PageBlocks({ blocks }: { blocks: Block[] }) {
             return (
               <section key={block.id ?? i} className="container-site py-12 sm:py-[72px]">
                 <div className="mb-8 border-t-2 border-ink pt-[18px] sm:mb-9">
-                  <h2 className="font-serif text-[28px] font-medium sm:text-[32px]">{block.heading}</h2>
+                  <h2 className="font-serif text-[28px] font-medium sm:text-[32px]">
+                    {block.heading}
+                  </h2>
                 </div>
                 <ol className="grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-[repeat(auto-fill,minmax(340px,1fr))] sm:gap-y-10">
                   {(block.items ?? []).map((item, n) => (
                     <li key={item.id ?? n} className="flex items-start gap-[18px]">
                       <span
                         aria-hidden="true"
-                        className={cn('w-9 shrink-0 font-serif text-[30px] leading-none', NUMERAL_COLOURS[n % 3])}
+                        className={cn(
+                          'w-9 shrink-0 font-serif text-[30px] leading-none',
+                          NUMERAL_COLOURS[n % 3],
+                        )}
                       >
                         {String(n + 1).padStart(2, '0')}
                       </span>
                       <div className="flex flex-col gap-1.5">
                         <h3 className="text-lg font-bold">{item.title}</h3>
-                        {item.text ? <p className="text-[15px] leading-[1.6] text-muted">{item.text}</p> : null}
+                        {item.text ? (
+                          <p className="text-[15px] leading-[1.6] text-muted">{item.text}</p>
+                        ) : null}
                       </div>
                     </li>
                   ))}
@@ -71,19 +81,29 @@ export function PageBlocks({ blocks }: { blocks: Block[] }) {
             )
           case 'cardGrid':
             return (
-              <section key={block.id ?? i} className={block.background === 'white' ? 'bg-paper' : 'bg-sand'}>
+              <section
+                key={block.id ?? i}
+                className={block.background === 'white' ? 'bg-paper' : 'bg-sand'}
+              >
                 <div className="container-site py-12 sm:py-[72px]">
                   <div className="mb-8 border-t-2 border-ink pt-[18px] sm:mb-9">
-                    <h2 className="font-serif text-[28px] font-medium sm:text-[32px]">{block.heading}</h2>
+                    <h2 className="font-serif text-[28px] font-medium sm:text-[32px]">
+                      {block.heading}
+                    </h2>
                   </div>
                   <ul className="grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] sm:gap-8">
                     {(block.cards ?? []).map((card, n) => (
                       <li
                         key={card.id ?? n}
-                        className={cn('flex flex-col gap-2.5 p-6 sm:p-7', block.background === 'white' ? 'border border-rule' : 'bg-paper')}
+                        className={cn(
+                          'flex flex-col gap-2.5 p-6 sm:p-7',
+                          block.background === 'white' ? 'border border-rule' : 'bg-paper',
+                        )}
                       >
                         <h3 className="font-serif text-2xl font-medium">{card.title}</h3>
-                        {card.text ? <p className="text-[15px] leading-[1.6] text-muted">{card.text}</p> : null}
+                        {card.text ? (
+                          <p className="text-[15px] leading-[1.6] text-muted">{card.text}</p>
+                        ) : null}
                       </li>
                     ))}
                   </ul>
@@ -92,7 +112,10 @@ export function PageBlocks({ blocks }: { blocks: Block[] }) {
             )
           case 'ctaRow':
             return (
-              <section key={block.id ?? i} className="container-site flex flex-wrap items-center justify-between gap-6 pt-12 pb-14 sm:pt-[72px] sm:pb-[88px]">
+              <section
+                key={block.id ?? i}
+                className="container-site flex flex-wrap items-center justify-between gap-6 pt-12 pb-14 sm:pt-[72px] sm:pb-[88px]"
+              >
                 <h2 className="max-w-[640px] font-serif text-[28px] leading-[1.15] font-medium sm:text-[36px]">
                   {block.heading}
                 </h2>

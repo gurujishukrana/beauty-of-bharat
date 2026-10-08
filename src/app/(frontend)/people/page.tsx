@@ -38,7 +38,11 @@ export default async function PeoplePage({ searchParams }: Props) {
     .map(([state]) => state)
 
   const chips = [
-    { label: copy.people.everyone, href: peopleHref({ q: filters.q }), active: !filters.role && !filters.state },
+    {
+      label: copy.people.everyone,
+      href: peopleHref({ q: filters.q }),
+      active: !filters.role && !filters.state,
+    },
     ...roles.map((r) => ({
       label: r.label,
       href: peopleHref({ role: r.value, q: filters.q }),
@@ -59,7 +63,9 @@ export default async function PeoplePage({ searchParams }: Props) {
           <h1 className="font-serif text-[36px] leading-[1.04] font-medium tracking-[-0.015em] sm:text-[60px]">
             {copy.people.title}
           </h1>
-          <p className="max-w-[640px] text-[17px] leading-[1.6] text-body sm:text-lg">{copy.people.intro}</p>
+          <p className="max-w-[640px] text-[17px] leading-[1.6] text-body sm:text-lg">
+            {copy.people.intro}
+          </p>
         </div>
         <aside className="flex min-w-0 flex-[1_1_320px] items-start gap-3.5 border border-rule p-[22px]">
           <ShieldCheckIcon size={28} strokeWidth={1.8} className="shrink-0 text-green-text" />
@@ -67,7 +73,10 @@ export default async function PeoplePage({ searchParams }: Props) {
             <h2 className="text-[15px] font-bold">{copy.people.verifyTitle}</h2>
             <p className="text-sm leading-[1.55] text-muted">
               {copy.people.verifyText}{' '}
-              <Link href={routes.contact} className="text-green-text underline underline-offset-[3px]">
+              <Link
+                href={routes.contact}
+                className="text-green-text underline underline-offset-[3px]"
+              >
                 {copy.people.verifyLink}
               </Link>
               .
@@ -87,7 +96,9 @@ export default async function PeoplePage({ searchParams }: Props) {
                     aria-current={chip.active ? 'page' : undefined}
                     className={cn(
                       'flex min-h-11 items-center rounded-full border px-4 text-sm font-medium',
-                      chip.active ? 'border-ink bg-ink text-white hover:text-white' : 'border-chip bg-paper text-ink',
+                      chip.active
+                        ? 'border-ink bg-ink text-white hover:text-white'
+                        : 'border-chip bg-paper text-ink',
                     )}
                   >
                     {chip.label}

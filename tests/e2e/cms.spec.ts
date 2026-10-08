@@ -25,28 +25,40 @@ test.describe('contact form', () => {
     await page.getByLabel('Message').fill('The date in the second paragraph looks wrong.')
     await page.getByRole('button', { name: 'Send message' }).click()
 
-    await expect(page.getByRole('heading', { name: 'Thanks — we’ve received your message' })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Thanks — we’ve received your message' }),
+    ).toBeVisible()
 
     // Saved to the CMS inbox (email goes to the server log when RESEND_API_KEY is unset).
     const token = await adminToken(request)
-    const res = await request.get('/api/contactSubmissions?where[name][equals]=E2E%20Tester&depth=0', {
-      headers: auth(token),
-    })
+    const res = await request.get(
+      '/api/contactSubmissions?where[name][equals]=E2E%20Tester&depth=0',
+      {
+        headers: auth(token),
+      },
+    )
     const { docs } = await res.json()
     expect(docs[0]).toMatchObject({ topic: 'correction', status: 'new', emailed: true })
   })
 
   test('correction link pre-fills topic and article', async ({ page }) => {
-    await page.goto('/contact?topic=correction&article=https%3A%2F%2Fthebeautyofbharat.com%2Fnews%2Fx')
+    await page.goto(
+      '/contact?topic=correction&article=https%3A%2F%2Fthebeautyofbharat.com%2Fnews%2Fx',
+    )
     await expect(page.getByLabel('What is this about?')).toHaveValue('correction')
-    await expect(page.getByLabel('Article link')).toHaveValue('https://thebeautyofbharat.com/news/x')
+    await expect(page.getByLabel('Article link')).toHaveValue(
+      'https://thebeautyofbharat.com/news/x',
+    )
   })
 })
 
 test.describe('publishing', () => {
   test.describe.configure({ mode: 'serial' })
 
-  test('an unpublished article returns 404, and appears once published', async ({ page, request }) => {
+  test('an unpublished article returns 404, and appears once published', async ({
+    page,
+    request,
+  }) => {
     const token = await adminToken(request)
     const f = await fixtures(request, token)
     const slug = `e2e-unpublished-${Date.now()}`
@@ -68,7 +80,10 @@ test.describe('publishing', () => {
 
     expect((await page.goto(`/news/${slug}`))?.status()).toBe(404)
 
-    await request.patch(`/api/articles/${id}`, { headers: auth(token), data: { _status: 'published' } })
+    await request.patch(`/api/articles/${id}`, {
+      headers: auth(token),
+      data: { _status: 'published' },
+    })
     expect((await page.goto(`/news/${slug}`))?.status()).toBe(200)
 
     await request.patch(`/api/articles/${id}`, { headers: auth(token), data: { _status: 'draft' } })

@@ -1,6 +1,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig, type PayloadRequest } from 'payload'
@@ -26,6 +27,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const useS3 = Boolean(process.env.S3_BUCKET)
 const isServerless = Boolean(process.env.VERCEL)
+
+/** "Name <address>" → parts, for the admin's own emails (password resets). */
+const [, fromName = 'Beauty of Bharat', fromAddress = 'noreply@thebeautyofbharat.com'] =
+  /^\s*"?([^"<]*?)"?\s*<([^>]+)>\s*$/.exec(process.env.CONTACT_FROM_EMAIL || '') ?? []
 
 export default buildConfig({
   serverURL: getSiteUrl(),
@@ -70,6 +75,14 @@ export default buildConfig({
     // Schema changes are pushed automatically in development; production runs committed migrations on boot.
     prodMigrations: migrations,
   }),
+  // Without RESEND_API_KEY, Payload prints emails (e.g. password resets) to the server log.
+  email: process.env.RESEND_API_KEY
+    ? resendAdapter({
+        apiKey: process.env.RESEND_API_KEY,
+        defaultFromAddress: fromAddress,
+        defaultFromName: fromName,
+      })
+    : undefined,
   sharp,
   cors: [getSiteUrl()],
   csrf: [getSiteUrl()],

@@ -15,7 +15,9 @@ export function NewsTipBand() {
           >
             {copy.home.tipTitle}
           </h2>
-          <p className="text-base leading-[1.55] text-navy-text max-sm:hidden">{copy.home.tipText}</p>
+          <p className="text-base leading-[1.55] text-navy-text max-sm:hidden">
+            {copy.home.tipText}
+          </p>
         </div>
         <Link
           href={routes.contact}

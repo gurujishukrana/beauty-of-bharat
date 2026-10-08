@@ -38,7 +38,9 @@ export default async function ContactPage({ searchParams }: Props) {
           Get in touch
         </h1>
         {settings.contactIntro ? (
-          <p className="max-w-[620px] text-[17px] leading-[1.6] text-body sm:text-lg">{settings.contactIntro}</p>
+          <p className="max-w-[620px] text-[17px] leading-[1.6] text-body sm:text-lg">
+            {settings.contactIntro}
+          </p>
         ) : null}
       </section>
 
@@ -48,9 +50,14 @@ export default async function ContactPage({ searchParams }: Props) {
             <li key={desk.title} className="flex flex-col gap-2.5 border-b border-rule py-7 pr-7">
               <span aria-hidden="true" className={`block h-[3px] w-9 ${DESK_BARS[i]}`} />
               <h2 className="mt-1.5 font-serif text-[26px] font-medium">{desk.title}</h2>
-              {desk.text ? <p className="text-[15px] leading-[1.55] text-muted">{desk.text}</p> : null}
+              {desk.text ? (
+                <p className="text-[15px] leading-[1.55] text-muted">{desk.text}</p>
+              ) : null}
               {desk.email ? (
-                <a href={`mailto:${desk.email}`} className="mt-1 text-[15px] font-semibold break-all text-green-text">
+                <a
+                  href={`mailto:${desk.email}`}
+                  className="mt-1 text-[15px] font-semibold break-all text-green-text"
+                >
                   {desk.email}
                 </a>
               ) : null}
@@ -61,7 +68,10 @@ export default async function ContactPage({ searchParams }: Props) {
 
       <section className="container-site flex flex-wrap items-start gap-10 pb-16 sm:gap-14 sm:pb-[88px]">
         <div className="relative min-w-0 flex-[2_1_520px]">
-          <ContactForm initialTopic={topicFromParam(sp.topic)} initialArticle={article?.slice(0, 500) ?? ''} />
+          <ContactForm
+            initialTopic={topicFromParam(sp.topic)}
+            initialArticle={article?.slice(0, 500) ?? ''}
+          />
         </div>
 
         <aside className="flex min-w-0 flex-[1_1_300px] flex-col gap-5">
@@ -87,7 +97,11 @@ export default async function ContactPage({ searchParams }: Props) {
                   const Icon = SOCIAL_ICONS[s.platform]
                   return (
                     <li key={s.id ?? s.url}>
-                      <a href={s.url} rel="me noopener" className="flex min-h-11 items-center gap-2.5 text-ink">
+                      <a
+                        href={s.url}
+                        rel="me noopener"
+                        className="flex min-h-11 items-center gap-2.5 text-ink"
+                      >
                         <Icon size={18} />
                         {SOCIAL_LABELS[s.platform]}
                       </a>

@@ -36,6 +36,24 @@ async function placeholderImage(
   })
 }
 
+/** Finds a document by slug, creating it if missing. Used for permanent (non-sample) content. */
+async function ensure(
+  payload: Payload,
+  collection: 'categories' | 'locations' | 'pages',
+  slug: string,
+  data: Record<string, unknown>,
+): Promise<number> {
+  const { docs } = await payload.find({
+    collection,
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth: 0,
+  })
+  if (docs[0]) return docs[0].id as number
+  const created = await payload.create({ collection, data: { ...data, slug } as never, context })
+  return created.id as number
+}
+
 async function ensureAdmin(payload: Payload) {
   const email = process.env.SEED_ADMIN_EMAIL
   const password = process.env.SEED_ADMIN_PASSWORD
@@ -64,32 +82,21 @@ export async function seed(payload: Payload) {
   await ensureAdmin(payload)
   await clearSampleContent(payload)
 
-  // Categories
+  // Categories and locations are real configuration (not sample content): created once, kept by seed:clear.
   const categoryIds = new Map<string, number>()
   for (const [i, c] of sample.categories.entries()) {
-    const created = await payload.create({
-      collection: 'categories',
-      data: {
-        ...c,
-        slug: slugify(c.name),
-        order: (i + 1) * 10,
-        showInCategoryBar: true,
-        isSample: true,
-      },
-      context,
+    const id = await ensure(payload, 'categories', slugify(c.name), {
+      ...c,
+      order: (i + 1) * 10,
+      showInCategoryBar: true,
     })
-    categoryIds.set(c.name, created.id)
+    categoryIds.set(c.name, id)
   }
 
   // Locations
   const locationIds = new Map<string, number>()
   for (const [name, state] of sample.locations) {
-    const created = await payload.create({
-      collection: 'locations',
-      data: { name, state, slug: slugify(name), isSample: true },
-      context,
-    })
-    locationIds.set(name, created.id)
+    locationIds.set(name, await ensure(payload, 'locations', slugify(name), { name, state }))
   }
 
   // People (no photos: the site shows initials until real portraits are uploaded)
@@ -162,80 +169,69 @@ export async function seed(payload: Payload) {
     articleIds.set(a.key, created.id)
   }
 
-  // About, Privacy, Terms
-  await payload.create({
-    collection: 'pages',
-    data: {
-      title: 'About',
-      slug: 'about',
-      isSample: true,
-      _status: 'published',
-      seo: {
-        metaDescription:
-          'Beauty of Bharat is a free newspaper focused on uplifting stories about India, from ground zero.',
-      },
-      layout: [
-        {
-          blockType: 'statementHero',
-          kicker: 'About Beauty of Bharat',
-          heading: sample.about.hero,
-          showMark: true,
-        },
-        {
-          blockType: 'twoColumnText',
-          heading: 'Why we exist',
-          body: doc(...sample.about.why.map((t) => p(t))),
-        },
-        {
-          blockType: 'numberedList',
-          heading: 'What we cover',
-          items: sample.about.cover.map(([title, text]) => ({ title, text })),
-        },
-        {
-          blockType: 'cardGrid',
-          heading: 'How we work',
-          background: 'sand',
-          cards: sample.about.principles.map(([title, text]) => ({ title, text })),
-        },
-        {
-          blockType: 'ctaRow',
-          heading: 'Read the stories. Meet the people who report them.',
-          primary: { label: 'Read the latest', url: '/news' },
-          secondary: { label: 'Meet the team', url: '/people' },
-        },
-      ],
+  // About uses the approved copy from the design; Privacy and Terms are PLACEHOLDERS to replace.
+  // They are not sample content, so seed:clear keeps them and the footer links keep working.
+  await ensure(payload, 'pages', 'about', {
+    title: 'About',
+    _status: 'published',
+    seo: {
+      metaDescription:
+        'Beauty of Bharat is a free newspaper focused on uplifting stories about India, from ground zero.',
     },
-    context,
+    layout: [
+      {
+        blockType: 'statementHero',
+        kicker: 'About Beauty of Bharat',
+        heading: sample.about.hero,
+        showMark: true,
+      },
+      {
+        blockType: 'twoColumnText',
+        heading: 'Why we exist',
+        body: doc(...sample.about.why.map((t) => p(t))),
+      },
+      {
+        blockType: 'numberedList',
+        heading: 'What we cover',
+        items: sample.about.cover.map(([title, text]) => ({ title, text })),
+      },
+      {
+        blockType: 'cardGrid',
+        heading: 'How we work',
+        background: 'sand',
+        cards: sample.about.principles.map(([title, text]) => ({ title, text })),
+      },
+      {
+        blockType: 'ctaRow',
+        heading: 'Read the stories. Meet the people who report them.',
+        primary: { label: 'Read the latest', url: '/news' },
+        secondary: { label: 'Meet the team', url: '/people' },
+      },
+    ],
   })
   for (const [title, slug] of [
     ['Privacy Policy', 'privacy'],
     ['Terms of Use', 'terms'],
   ]) {
-    await payload.create({
-      collection: 'pages',
-      data: {
-        title,
-        slug,
-        isSample: true,
-        _status: 'published',
-        layout: [
-          {
-            blockType: 'richText',
-            content: doc(
-              p(
-                'PLACEHOLDER — this page must be replaced with text reviewed by a lawyer before launch.',
-              ),
-              h2('Summary'),
-              p(
-                slug === 'privacy'
-                  ? 'Beauty of Bharat does not use advertising, tracking cookies or third-party analytics. Messages sent through the contact form are stored so the right desk can reply, and are not shared.'
-                  : 'Stories on Beauty of Bharat are free to read. Please credit Beauty of Bharat and link to the original story when quoting our reporting.',
-              ),
+    await ensure(payload, 'pages', slug, {
+      title,
+      _status: 'published',
+      layout: [
+        {
+          blockType: 'richText',
+          content: doc(
+            p(
+              'PLACEHOLDER — this page must be replaced with text reviewed by a lawyer before launch.',
             ),
-          },
-        ],
-      },
-      context,
+            h2('Summary'),
+            p(
+              slug === 'privacy'
+                ? 'Beauty of Bharat does not use advertising, tracking cookies or third-party analytics. Messages sent through the contact form are stored so the right desk can reply, and are not shared.'
+                : 'Stories on Beauty of Bharat are free to read. Please credit Beauty of Bharat and link to the original story when quoting our reporting.',
+            ),
+          ),
+        },
+      ],
     })
   }
 

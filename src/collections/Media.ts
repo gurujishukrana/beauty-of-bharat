@@ -44,7 +44,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     // Local disk in development. In production the S3/R2 adapter (payload.config.ts) takes over.
-    staticDir: path.resolve(dirname, '../../media'),
+    staticDir: process.env.MEDIA_DIR || path.resolve(dirname, '../../media'),
     mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif'],
     focalPoint: true,
     crop: true,

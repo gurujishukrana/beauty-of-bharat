@@ -43,7 +43,11 @@ export function ArticleArchive({
           {title}
           {page > 1 ? <span className="sr-only">, {copy.pagination.page(page)}</span> : null}
         </h1>
-        {description ? <p className="max-w-[640px] text-[17px] leading-[1.6] text-body sm:text-lg">{description}</p> : null}
+        {description ? (
+          <p className="max-w-[640px] text-[17px] leading-[1.6] text-body sm:text-lg">
+            {description}
+          </p>
+        ) : null}
         <nav aria-label={copy.nav.categoriesLabel} className="mt-2">
           <ul className="flex flex-wrap gap-2">
             {chips.map((chip) => {
@@ -55,7 +59,9 @@ export function ArticleArchive({
                     aria-current={active ? 'page' : undefined}
                     className={cn(
                       'flex min-h-11 items-center rounded-full border px-4 text-sm font-medium',
-                      active ? 'border-ink bg-ink text-white hover:text-white' : 'border-chip bg-paper text-ink',
+                      active
+                        ? 'border-ink bg-ink text-white hover:text-white'
+                        : 'border-chip bg-paper text-ink',
                     )}
                   >
                     {chip.name}
@@ -87,7 +93,9 @@ export function ArticleArchive({
         <Pagination
           page={page}
           totalPages={totalPages}
-          href={(p) => (p === 1 ? basePath : `${basePath}${basePath.includes('?') ? '&' : '?'}page=${p}`)}
+          href={(p) =>
+            p === 1 ? basePath : `${basePath}${basePath.includes('?') ? '&' : '?'}page=${p}`
+          }
         />
       </section>
     </>

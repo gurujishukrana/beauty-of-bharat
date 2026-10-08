@@ -6,7 +6,9 @@ import { chromium } from '@playwright/test'
 
 const base = process.env.BASE_URL || 'http://localhost:3000'
 const [outDir = 'screenshots', ...paths] = process.argv.slice(2)
-const pages = paths.length ? paths : ['/', '/news', '/people', '/about', '/contact', '/search?q=school']
+const pages = paths.length
+  ? paths
+  : ['/', '/news', '/people', '/about', '/contact', '/search?q=school']
 const widths = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'phone', width: 390, height: 844, isMobile: true, hasTouch: true },
@@ -33,9 +35,14 @@ for (const viewport of widths) {
       window.scrollTo(0, 0)
     })
     await page.waitForTimeout(300)
-    const file = path.join(outDir, `${viewport.name}-${p.replace(/[^a-z0-9]+/gi, '_') || 'home'}.png`)
+    const file = path.join(
+      outDir,
+      `${viewport.name}-${p.replace(/[^a-z0-9]+/gi, '_') || 'home'}.png`,
+    )
     await page.screenshot({ path: file, fullPage: true })
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    )
     console.log(`${file}${overflow > 0 ? `  ⚠ horizontal overflow ${overflow}px` : ''}`)
   }
   await context.close()

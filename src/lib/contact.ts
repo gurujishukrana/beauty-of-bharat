@@ -38,16 +38,20 @@ export const isEmail = (v: string) => EMAIL.test(v.trim())
 /** Server-side (and unit-tested) validation. Returns an empty object when valid. */
 export function validateContact(values: ContactValues): ContactErrors {
   const errors: ContactErrors = {}
-  if (values.name.trim().length < 2 || values.name.length > 120) errors.name = copy.contact.errors.name
+  if (values.name.trim().length < 2 || values.name.length > 120)
+    errors.name = copy.contact.errors.name
   const contact = values.contact.trim()
   if (!contact) errors.contact = copy.contact.errors.contact
   else if (!EMAIL.test(contact) && !(PHONE.test(contact) && contact.replace(/\D/g, '').length >= 7))
     errors.contact = copy.contact.errors.contactFormat
-  if (!(TOPICS as readonly string[]).includes(values.topic)) errors.topic = copy.contact.errors.topic
-  if (values.message.trim().length < 10 || values.message.length > 5000) errors.message = copy.contact.errors.message
+  if (!(TOPICS as readonly string[]).includes(values.topic))
+    errors.topic = copy.contact.errors.topic
+  if (values.message.trim().length < 10 || values.message.length > 5000)
+    errors.message = copy.contact.errors.message
   if (values.topic === 'correction') {
     const url = values.articleUrl.trim()
-    if (!/^https?:\/\/\S+$/.test(url) || url.length > 500) errors.articleUrl = copy.contact.errors.articleUrl
+    if (!/^https?:\/\/\S+$/.test(url) || url.length > 500)
+      errors.articleUrl = copy.contact.errors.articleUrl
   }
   return errors
 }

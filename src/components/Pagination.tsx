@@ -42,7 +42,12 @@ export function Pagination({
                 href={href(p)}
                 aria-current={p === page ? 'page' : undefined}
                 aria-label={copy.pagination.page(p)}
-                className={cn(linkBase, p === page ? 'border-ink bg-ink text-white hover:text-white' : 'border-rule text-ink')}
+                className={cn(
+                  linkBase,
+                  p === page
+                    ? 'border-ink bg-ink text-white hover:text-white'
+                    : 'border-rule text-ink',
+                )}
               >
                 {p}
               </Link>

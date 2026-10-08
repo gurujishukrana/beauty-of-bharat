@@ -1,14 +1,10 @@
 import type { CollectionSlug, Payload } from 'payload'
 
-/** Collections that hold sample content, in a safe deletion order (dependents first). */
-const SAMPLE_COLLECTIONS: CollectionSlug[] = [
-  'articles',
-  'pages',
-  'people',
-  'locations',
-  'categories',
-  'media',
-]
+/**
+ * Collections that hold sample content, in a safe deletion order (dependents first).
+ * Categories, locations and the About/Privacy/Terms pages are real configuration and are kept.
+ */
+const SAMPLE_COLLECTIONS: CollectionSlug[] = ['articles', 'people', 'media']
 
 /** Deletes every document marked `isSample: true`. Real content is never touched. */
 export async function clearSampleContent(payload: Payload): Promise<number> {

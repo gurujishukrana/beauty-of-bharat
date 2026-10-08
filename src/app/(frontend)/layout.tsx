@@ -14,15 +14,27 @@ import './globals.css'
 
 const serif = Newsreader({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
-  axes: ['opsz'],
+  style: ['normal'],
+  weight: ['400', '500', '600'],
   display: 'swap',
   variable: '--font-newsreader',
+})
+
+// Italic is only used for pull quotes and emphasis, so it is not preloaded.
+const serifItalic = Newsreader({
+  subsets: ['latin'],
+  style: ['italic'],
+  weight: ['400'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-newsreader-italic',
 })
 
 const sans = Libre_Franklin({
   subsets: ['latin'],
   display: 'swap',
+  // Not preloaded: headlines (serif) are the largest paint; UI text can swap in a moment later.
+  preload: false,
   variable: '--font-libre-franklin',
 })
 
@@ -65,7 +77,7 @@ export const viewport: Viewport = {
 export default async function FrontendLayout({ children }: { children: ReactNode }) {
   const settings = await getSiteSettings()
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${serif.variable} ${serifItalic.variable} ${sans.variable}`}>
       <body>
         <a
           href="#main"

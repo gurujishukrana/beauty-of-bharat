@@ -11,7 +11,9 @@ describe('parseVideoUrl (allowlist)', () => {
       'https://youtube.com/shorts/dQw4w9WgXcQ',
       'https://m.youtube.com/watch?v=dQw4w9WgXcQ&t=10',
     ]) {
-      expect(parseVideoUrl(url)?.embedUrl).toBe('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0')
+      expect(parseVideoUrl(url)?.embedUrl).toBe(
+        'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0',
+      )
     }
   })
 
@@ -45,13 +47,25 @@ describe('contact form validation', () => {
   })
 
   it('reports each problem', () => {
-    const errors = validateContact({ name: '', contact: 'nope', topic: 'other', message: 'short', articleUrl: '' })
+    const errors = validateContact({
+      name: '',
+      contact: 'nope',
+      topic: 'other',
+      message: 'short',
+      articleUrl: '',
+    })
     expect(Object.keys(errors).sort()).toEqual(['contact', 'message', 'name', 'topic'])
   })
 
   it('requires the article link for corrections', () => {
     expect(validateContact({ ...valid, topic: 'correction' }).articleUrl).toBeTruthy()
-    expect(validateContact({ ...valid, topic: 'correction', articleUrl: 'https://thebeautyofbharat.com/news/x' })).toEqual({})
+    expect(
+      validateContact({
+        ...valid,
+        topic: 'correction',
+        articleUrl: 'https://thebeautyofbharat.com/news/x',
+      }),
+    ).toEqual({})
   })
 
   it('maps ?topic= values', () => {

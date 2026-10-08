@@ -23,7 +23,9 @@ test.describe('reading the site', () => {
   })
 
   test('author link leads to a profile that lists the article', async ({ page }, info) => {
-    await page.goto('/news/in-a-ludhiana-village-a-retired-teachers-courtyard-has-become-the-evening-school')
+    await page.goto(
+      '/news/in-a-ludhiana-village-a-retired-teachers-courtyard-has-become-the-evening-school',
+    )
     const title = (await page.getByRole('heading', { level: 1 }).textContent())?.trim() ?? ''
     if (info.project.name === 'mobile') {
       await page.getByRole('link', { name: /More stories by Harleen/ }).click()
@@ -57,7 +59,13 @@ test.describe('reading the site', () => {
   })
 
   test('news, category, about, search and legal pages pass axe', async ({ page }) => {
-    for (const path of ['/news', '/category/ground-reports', '/about', '/search?q=school', '/privacy']) {
+    for (const path of [
+      '/news',
+      '/category/ground-reports',
+      '/about',
+      '/search?q=school',
+      '/privacy',
+    ]) {
       await page.goto(path)
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
       await expectNoSeriousA11yIssues(page)

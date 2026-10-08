@@ -18,7 +18,8 @@ import { routes } from '@/lib/url'
 import { parseVideoUrl } from '@/lib/video'
 import type { ImageBlock, PullQuoteBlock, VideoEmbedBlock } from '@/payload-types'
 
-type NodeTypes = DefaultNodeTypes | SerializedBlockNode<ImageBlock | PullQuoteBlock | VideoEmbedBlock>
+type NodeTypes =
+  DefaultNodeTypes | SerializedBlockNode<ImageBlock | PullQuoteBlock | VideoEmbedBlock>
 
 /** Internal links point at documents; turn them into site URLs. */
 function internalDocToHref({ linkNode }: { linkNode: SerializedLinkNode }): string {
@@ -49,7 +50,9 @@ const converters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => 
         wide={node.fields.size === 'wide'}
       />
     ),
-    pullQuote: ({ node }) => <PullQuote quote={node.fields.quote} attribution={node.fields.attribution} />,
+    pullQuote: ({ node }) => (
+      <PullQuote quote={node.fields.quote} attribution={node.fields.attribution} />
+    ),
     videoEmbed: ({ node }) => {
       const video = parseVideoUrl(node.fields.url)
       if (!video) return null
@@ -78,5 +81,12 @@ export function RichText({
   className?: string
 }) {
   if (!data) return null
-  return <LexicalRichText data={data as DefaultTypedEditorState} converters={converters} className={className} disableContainer={false} />
+  return (
+    <LexicalRichText
+      data={data as DefaultTypedEditorState}
+      converters={converters}
+      className={className}
+      disableContainer={false}
+    />
+  )
 }

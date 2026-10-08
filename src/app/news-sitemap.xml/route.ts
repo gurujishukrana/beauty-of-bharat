@@ -29,6 +29,9 @@ ${urls}
 </urlset>
 `
   return new Response(xml, {
-    headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, s-maxage=900' },
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=900',
+    },
   })
 }

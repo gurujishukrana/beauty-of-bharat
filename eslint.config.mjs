@@ -26,6 +26,7 @@ const eslintConfig = [
       'design-reference/',
       'src/payload-types.ts',
       'src/migrations/*.json',
+      'src/migrations/2*.ts',
       'src/app/(payload)/admin/importMap.js',
       'playwright-report/',
       'test-results/',

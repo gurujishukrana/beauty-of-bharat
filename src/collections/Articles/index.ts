@@ -7,6 +7,7 @@ import { ARTICLE_TARGETS, revalidate } from '@/hooks/revalidate'
 import { previewPath } from '@/lib/preview'
 import { routes } from '@/lib/url'
 
+import { scheduleEndpoint } from './endpoints/schedule'
 import { guardAndDerive } from './hooks/guardAndDerive'
 import { redirectOldSlug } from './hooks/redirectOldSlug'
 
@@ -30,6 +31,7 @@ export const Articles: CollectionConfig = {
   },
   defaultSort: '-publishedAt',
   access: articleAccess,
+  endpoints: [scheduleEndpoint],
   // What other documents get when they reference an article (e.g. related stories).
   defaultPopulate: {
     title: true,

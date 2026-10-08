@@ -11,7 +11,7 @@
   --color-body: #3a3a44;
   --color-muted: #4a4a55;
   --color-subtle: #5b5b66;
-  --color-faint: #8a8a94;
+  --color-faint: #6e6e78; /* brief: #8A8A94, darkened to pass WCAG AA at caption size */
   --color-rule: #e6e3dc;
   --color-field: #cfcbc2;
   --color-chip: #d9d6ce;

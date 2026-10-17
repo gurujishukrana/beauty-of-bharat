@@ -238,7 +238,7 @@ export const getPublicPeople = cache(async (): Promise<Person[]> => {
   const { docs } = await payload.find({
     collection: 'people',
     where: publicPeopleWhere,
-    sort: ['order', 'fullName'],
+    sort: '_order',
     limit: 500,
     depth: 1,
     pagination: false,
@@ -323,7 +323,7 @@ export async function searchSite(query: string) {
     payload.find({
       collection: 'people',
       where: peopleWhere,
-      sort: 'order',
+      sort: '_order',
       limit: 12,
       depth: 1,
       select: { bio: false, articles: false },

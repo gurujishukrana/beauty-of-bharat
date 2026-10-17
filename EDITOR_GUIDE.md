@@ -106,7 +106,12 @@ Go to **Content → People**.
 - **Press card numbers** are hidden on the public site by default (cards say "Press card holder"). To show them,
   tick **Show press card numbers on the website** in **Settings → Site settings → General**. They are always
   visible to logged-in staff in the admin.
-- **Order:** lower **Order** numbers appear first on the People page; ties are sorted by name.
+- **Changing the order:** in **Content → People**, grab the **⠿** handle at the left of a row and drag the
+  person up or down. The new order is saved straight away and used on the People page and the homepage team
+  band. (The handles show when the list is sorted by its default order. If you clicked a column heading to sort,
+  click the ⇅ icon at the top-left of the table to switch back.)
+- **Photos:** use a front-facing portrait with plain background. For a consistent look, crop it so the eyes sit a
+  little above the middle and the head fills about half the width, like the other team photos.
 - **Hide someone:** untick **Show on People page** and publish. Their profile disappears from the site, but
   their bylines remain on stories they wrote (without a link).
 - **Revoke or suspend a press card:** on the **Press card** tab, set **Status** to _Revoked_ or _Suspended_ and

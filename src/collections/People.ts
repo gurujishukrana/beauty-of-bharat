@@ -26,7 +26,9 @@ export const People: CollectionConfig = {
     livePreview: { url: ({ data }) => previewPath(routes.person(String(data?.slug ?? ''))) },
     preview: (data) => previewPath(routes.person(String(data?.slug ?? ''))),
   },
-  defaultSort: 'order',
+  // Drag-and-drop ordering in the People list (Payload adds a hidden `_order` field).
+  orderable: true,
+  defaultSort: '_order',
   access: {
     read: ({ req }) => (req.user ? true : publicPeopleWhere),
     create: staff,
@@ -164,12 +166,8 @@ export const People: CollectionConfig = {
       label: 'Show on People page',
       admin: { position: 'sidebar' },
     },
-    {
-      name: 'order',
-      type: 'number',
-      defaultValue: 100,
-      admin: { position: 'sidebar', description: 'Lower numbers are listed first, then by name.' },
-    },
+    // Replaced by drag-and-drop ordering; kept (hidden) so existing data isn't dropped.
+    { name: 'order', type: 'number', admin: { hidden: true } },
     isSampleField,
   ],
   hooks: {

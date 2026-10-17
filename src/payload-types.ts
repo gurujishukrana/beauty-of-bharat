@@ -335,6 +335,7 @@ export interface Media {
  */
 export interface Person {
   id: number;
+  _order?: string | null;
   fullName: string;
   designation: string;
   /**
@@ -391,9 +392,6 @@ export interface Person {
    */
   slug: string;
   showOnPeoplePage?: boolean | null;
-  /**
-   * Lower numbers are listed first, then by name.
-   */
   order?: number | null;
   /**
    * Created by the seed script. Run `pnpm seed:clear` to remove all sample content.
@@ -928,6 +926,7 @@ export interface ArticlesSelect<T extends boolean = true> {
  * via the `definition` "people_select".
  */
 export interface PeopleSelect<T extends boolean = true> {
+  _order?: T;
   fullName?: T;
   designation?: T;
   roleType?: T;

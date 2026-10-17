@@ -8,7 +8,7 @@ import { copy } from '@/lib/copy'
 import { cn } from '@/lib/cn'
 import { breadcrumbJsonLd } from '@/lib/jsonld'
 import { filterPeople, parsePeopleFilters, peopleHref, ROLE_FILTERS } from '@/lib/people'
-import { getPublicPeople } from '@/lib/queries'
+import { getPublicPeople, getSiteSettings } from '@/lib/queries'
 import { routes } from '@/lib/url'
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ type Props = { searchParams: Promise<Record<string, string | string[] | undefine
 
 export default async function PeoplePage({ searchParams }: Props) {
   const filters = parsePeopleFilters(await searchParams)
-  const everyone = await getPublicPeople()
+  const [everyone, settings] = await Promise.all([getPublicPeople(), getSiteSettings()])
   const people = filterPeople(everyone, filters)
 
   // Role chips for roles that have people, plus the two states with the most people.
@@ -135,7 +135,11 @@ export default async function PeoplePage({ searchParams }: Props) {
         {people.length ? (
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 min-[560px]:grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(270px,1fr))]">
             {people.map((person) => (
-              <PersonCard key={person.id} person={person} />
+              <PersonCard
+                key={person.id}
+                person={person}
+                showCardNumber={Boolean(settings.showPressCardNumbers)}
+              />
             ))}
           </div>
         ) : (

@@ -1334,6 +1334,10 @@ export interface SiteSetting {
    */
   missionLine: string;
   utilityBarText: string;
+  /**
+   * Off: People cards and profiles say "Press card holder" without the number. Numbers are always visible here in the admin.
+   */
+  showPressCardNumbers?: boolean | null;
   socialLinks?:
     | {
         platform: 'instagram' | 'x' | 'youtube' | 'linkedin' | 'facebook' | 'whatsapp';
@@ -1423,6 +1427,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   tagline?: T;
   missionLine?: T;
   utilityBarText?: T;
+  showPressCardNumbers?: T;
   socialLinks?:
     | T
     | {

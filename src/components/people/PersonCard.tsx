@@ -13,7 +13,14 @@ export function socialHref(platform: string, url: string): string {
 }
 
 /** People directory card: 4:5 portrait, press card line, name, role, place, bio, links. */
-export function PersonCard({ person }: { person: Person }) {
+export function PersonCard({
+  person,
+  showCardNumber = false,
+}: {
+  person: Person
+  /** Site settings → "Show press card numbers on the website". */
+  showCardNumber?: boolean
+}) {
   const href = routes.person(person.slug)
   const location = typeof person.location === 'object' ? person.location : null
   const socials = (person.socialLinks ?? []).filter((s) => s.platform !== 'email').slice(0, 3)
@@ -30,7 +37,9 @@ export function PersonCard({ person }: { person: Person }) {
       </Link>
       <p className="flex items-center gap-1.5 text-xs font-semibold text-green-text">
         <ShieldCheckIcon />
-        {copy.people.pressCard} · {person.pressCardNumber}
+        {showCardNumber && person.pressCardNumber
+          ? `${copy.people.pressCard} · ${person.pressCardNumber}`
+          : copy.article.pressCardHolder}
       </p>
       <div className="flex flex-col gap-1">
         <h2 className="font-serif text-[25px] leading-[1.15] font-medium">

@@ -34,7 +34,9 @@ test.describe('reading the site', () => {
     }
     await expect(page).toHaveURL(/\/people\/harleen-kaur$/)
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Harleen Kaur')
-    await expect(page.getByText('BOB/004').first()).toBeVisible()
+    // Press card numbers are hidden unless Site settings switch them on.
+    await expect(page.getByText('Official press card')).toBeVisible()
+    await expect(page.getByText('BOB/004')).toHaveCount(0)
     await expect(page.getByRole('heading', { level: 3, name: title })).toBeVisible()
     await expectNoSeriousA11yIssues(page)
   })

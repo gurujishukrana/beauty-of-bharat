@@ -62,6 +62,16 @@ export const SiteSettings: GlobalConfig = {
               required: true,
               defaultValue: 'A free newspaper. No paywall, ever.',
             },
+            {
+              name: 'showPressCardNumbers',
+              type: 'checkbox',
+              defaultValue: false,
+              label: 'Show press card numbers on the website',
+              admin: {
+                description:
+                  'Off: People cards and profiles say "Press card holder" without the number. Numbers are always visible here in the admin.',
+              },
+            },
             socialLinksField(['instagram', 'youtube', 'whatsapp', 'x', 'facebook', 'linkedin']),
             {
               type: 'row',

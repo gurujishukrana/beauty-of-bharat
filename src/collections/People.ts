@@ -107,6 +107,8 @@ export const People: CollectionConfig = {
               fields: [
                 {
                   name: 'pressCardNumber',
+                  // Never exposed by the public API; the site shows it only when Site settings allow.
+                  access: { read: ({ req }) => Boolean(req.user) },
                   type: 'text',
                   required: true,
                   unique: true,

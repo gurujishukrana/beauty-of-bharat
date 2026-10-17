@@ -17,7 +17,7 @@ import { copy } from '@/lib/copy'
 import { formatMonthYear } from '@/lib/dates'
 import { breadcrumbJsonLd, profileJsonLd } from '@/lib/jsonld'
 import { toImage } from '@/lib/media'
-import { getPayloadClient, getPersonBySlug, listArticles } from '@/lib/queries'
+import { getPayloadClient, getPersonBySlug, getSiteSettings, listArticles } from '@/lib/queries'
 import { firstName } from '@/lib/text'
 import { absoluteUrl, routes } from '@/lib/url'
 
@@ -85,7 +85,10 @@ export default async function ProfilePage({ params }: Props) {
 
   const path = routes.person(person.slug)
   const location = typeof person.location === 'object' ? person.location : null
-  const articles = await listArticles({ authorId: person.id, limit: ARTICLES_PER_PAGE })
+  const [articles, settings] = await Promise.all([
+    listArticles({ authorId: person.id, limit: ARTICLES_PER_PAGE }),
+    getSiteSettings(),
+  ])
   const name = firstName(person.fullName)
   const socials = person.socialLinks ?? []
   const hasBio = Boolean(person.bio?.root?.children?.length)
@@ -129,10 +132,12 @@ export default async function ProfilePage({ params }: Props) {
               </div>
             </div>
             <dl className="grid grid-cols-2 gap-3 text-[13px]">
-              <div className="flex flex-col gap-0.5">
-                <dt className="text-subtle">{copy.profile.cardNumber}</dt>
-                <dd className="font-semibold">{person.pressCardNumber}</dd>
-              </div>
+              {settings.showPressCardNumbers ? (
+                <div className="flex flex-col gap-0.5">
+                  <dt className="text-subtle">{copy.profile.cardNumber}</dt>
+                  <dd className="font-semibold">{person.pressCardNumber}</dd>
+                </div>
+              ) : null}
               <div className="flex flex-col gap-0.5">
                 <dt className="text-subtle">{copy.profile.status}</dt>
                 <dd className="font-semibold text-green-text capitalize">

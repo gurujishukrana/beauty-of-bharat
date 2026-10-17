@@ -103,6 +103,9 @@ Go to **Content → People**.
   the People page filters), location, photo (a real photo of the person, with the focal point on their face), a
   short bio (up to 240 characters, for the card) and an optional longer bio. Add social links and an email.
   On the **Press card** tab, enter the card number (e.g. BOB/016), status and date joined. Then **Publish**.
+- **Press card numbers** are hidden on the public site by default (cards say "Press card holder"). To show them,
+  tick **Show press card numbers on the website** in **Settings → Site settings → General**. They are always
+  visible to logged-in staff in the admin.
 - **Order:** lower **Order** numbers appear first on the People page; ties are sorted by name.
 - **Hide someone:** untick **Show on People page** and publish. Their profile disappears from the site, but
   their bylines remain on stories they wrote (without a link).

@@ -1,9 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["sin1"],
   "crons": [
     {
       "path": "/api/payload-jobs/run?queue=default",
-      "schedule": "*/5 * * * *"
+      "schedule": "30 0 * * *"
     }
   ]
 }

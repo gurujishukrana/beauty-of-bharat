@@ -62,7 +62,7 @@ Cloudflare → Turnstile → **Add site** → domain `thebeautyofbharat.com`, wi
 
 ### 6. Scheduled publishing (cron)
 
-`vercel.json` asks Vercel Cron to call `/api/payload-jobs/run?queue=default` **every 5 minutes**. Vercel adds the
+`vercel.json` asks Vercel Cron to call `/api/payload-jobs/run?queue=default` **once a day** (00:30 UTC), the most often Vercel's free Hobby plan allows. On **Pro**, change the schedule in `vercel.json` to `*/5 * * * *`. `vercel.json` also pins the site to Vercel's Singapore region (`sin1`), next to the Neon database. Vercel adds the
 `Authorization: Bearer $CRON_SECRET` header, which the endpoint checks.
 
 - Vercel **Pro** runs it as configured.

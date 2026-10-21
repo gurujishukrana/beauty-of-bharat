@@ -10,7 +10,7 @@ serves the public site and the CMS (Payload) at `/admin`.
 ## Stack
 
 Next.js 16 (App Router, React Server Components, TypeScript strict) · Payload CMS 3 · PostgreSQL ·
-Tailwind CSS 4 · Lexical rich text · Cloudflare R2 (S3) for media in production · Resend for email ·
+Tailwind CSS 4 · Lexical rich text · Vercel Blob for photos in production · Resend for email ·
 Cloudflare Turnstile · Vitest + Playwright + axe.
 
 ## Run it locally
@@ -57,7 +57,7 @@ committed migrations in `src/migrations` (run automatically on start-up and duri
 
 See [`.env.example`](.env.example) for every variable with comments. Required in production:
 `DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL`, `PREVIEW_SECRET`, `CRON_SECRET`.
-Recommended: `S3_*` (media on R2), `RESEND_API_KEY` + `CONTACT_FROM_EMAIL` (contact form and password-reset emails),
+Recommended: a Vercel Blob store (`BLOB_READ_WRITE_TOKEN`, added by Vercel), `RESEND_API_KEY` + `CONTACT_FROM_EMAIL` (contact form and password-reset emails),
 `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` (spam protection). Unset optional services fall back safely:
 media goes to local disk, emails are written to the server log, and Turnstile is skipped.
 

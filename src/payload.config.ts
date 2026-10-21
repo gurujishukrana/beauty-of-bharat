@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { s3Storage } from '@payloadcms/storage-s3'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig, type PayloadRequest } from 'payload'
 import sharp from 'sharp'
 
@@ -25,7 +25,6 @@ import { migrations } from './migrations'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const useS3 = Boolean(process.env.S3_BUCKET)
 const isServerless = Boolean(process.env.VERCEL)
 
 /** "Name <address>" → parts, for the admin's own emails (password resets). */
@@ -105,26 +104,17 @@ export default buildConfig({
         hooks: { afterChange: [({ req, doc }) => (revalidate(req, EVERYTHING), doc)] },
       },
     }),
-    s3Storage({
-      enabled: useS3,
-      collections: {
-        media: {
-          // Files are served straight from the bucket's public URL (CDN), not through Payload.
-          disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) =>
-            `${process.env.S3_PUBLIC_URL}/${[prefix, filename].filter(Boolean).join('/')}`,
-        },
-      },
-      bucket: process.env.S3_BUCKET || '',
-      config: {
-        endpoint: process.env.S3_ENDPOINT,
-        region: process.env.S3_REGION || 'auto',
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-        },
-        forcePathStyle: true,
-      },
+    // Photos go to Vercel Blob on Vercel (BLOB_READ_WRITE_TOKEN is set automatically when a Blob
+    // store is connected); elsewhere they stay on local disk. `alwaysInsertFields` keeps the
+    // database schema identical in both cases, so the committed migrations always match.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      alwaysInsertFields: true,
+      // Upload straight from the browser, so large photos aren't blocked by Vercel's 4.5 MB request limit.
+      clientUploads: true,
+      // Serve files directly from Blob's CDN instead of through the app.
+      collections: { media: { disablePayloadAccessControl: true } },
     }),
   ],
   jobs: {

@@ -2,7 +2,7 @@
 
 Two supported setups:
 
-- **A. Vercel + Neon (Postgres) + Cloudflare R2 (images) + Resend (email):** recommended, mostly free tiers.
+- **A. Vercel (site + photo storage) + Neon (Postgres) + Resend (email):** recommended, mostly free tiers.
 - **B. Any Linux VPS with Docker:** everything on one server.
 
 Both need the same environment variables (see [`.env.example`](.env.example)). Generate secrets with
@@ -10,7 +10,7 @@ Both need the same environment variables (see [`.env.example`](.env.example)). G
 
 ---
 
-## A. Vercel + Neon + R2
+## A. Vercel + Neon
 
 ### 1. Database: Neon
 
@@ -19,16 +19,11 @@ Both need the same environment variables (see [`.env.example`](.env.example)). G
 3. Backups: Neon keeps point-in-time history (7 days on the free plan, longer on paid plans). To restore,
    use Neon → Branches → Restore. Also take a weekly `pg_dump` and keep it off-site (see "Backups" below).
 
-### 2. Images: Cloudflare R2
+### 2. Images: Vercel Blob
 
-1. Cloudflare dashboard → R2 → **Create bucket** (e.g. `bob-media`).
-2. Bucket → Settings → **Public access**: connect a custom domain such as `media.thebeautyofbharat.com`
-   (or enable the r2.dev URL while testing). That URL is `S3_PUBLIC_URL`.
-3. R2 → **Manage API tokens** → create a token with _Object Read & Write_ on this bucket. Copy the
-   access key ID and secret (`S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`) and the S3 endpoint
-   `https://<account-id>.r2.cloudflarestorage.com` (`S3_ENDPOINT`). Set `S3_BUCKET=bob-media`, `S3_REGION=auto`.
-4. Turn on **Object versioning** for the bucket if available, or schedule a periodic copy (e.g. `rclone sync`) to
-   a second bucket, so deleted images can be recovered.
+Done inside Vercel after the project exists (step 5): Project → **Storage** → **Create Database / Store** →
+**Blob** → connect it to the project. Vercel adds `BLOB_READ_WRITE_TOKEN` automatically; redeploy once afterwards.
+Photos uploaded in the admin then go straight to Blob's CDN. Without a Blob store, uploads on Vercel would be lost.
 
 ### 3. Email: Resend
 
@@ -57,7 +52,7 @@ Cloudflare → Turnstile → **Add site** → domain `thebeautyofbharat.com`, wi
    | `NEXT_PUBLIC_SITE_URL`                                                                               | `https://thebeautyofbharat.com`                                      |
    | `PREVIEW_SECRET`                                                                                     | long random string                                                   |
    | `CRON_SECRET`                                                                                        | long random string (Vercel sends it to the cron route automatically) |
-   | `S3_BUCKET`, `S3_ENDPOINT`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_PUBLIC_URL` | from step 2                                                          |
+   | `BLOB_READ_WRITE_TOKEN` | added automatically when you connect a Blob store (step 2) |
    | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`                                                               | from step 3                                                          |
    | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`                                             | from step 4                                                          |
 
@@ -83,7 +78,6 @@ Cloudflare → Turnstile → **Add site** → domain `thebeautyofbharat.com`, wi
 2. At your registrar / DNS provider:
    - apex `thebeautyofbharat.com` → `A 76.76.21.21` (or the record Vercel shows)
    - `www` → `CNAME cname.vercel-dns.com`
-   - `media` → handled by Cloudflare R2's custom domain (step 2)
    - Resend's SPF/DKIM records (step 3)
 3. Vercel issues HTTPS certificates automatically. HSTS is sent once `NEXT_PUBLIC_SITE_URL` starts with `https://`.
 
@@ -109,13 +103,13 @@ reverse proxy (Caddy shown) terminates HTTPS.
 git clone <repo> /srv/beautyofbharat && cd /srv/beautyofbharat
 cp .env.example .env
 # Edit .env: secrets, NEXT_PUBLIC_SITE_URL=https://thebeautyofbharat.com,
-# a strong POSTGRES_PASSWORD (also inside DATABASE_URI, host 127.0.0.1), optional S3/Resend/Turnstile.
+# a strong POSTGRES_PASSWORD (also inside DATABASE_URI, host 127.0.0.1), optional Resend/Turnstile.
 docker compose up -d postgres
 docker compose --profile app build      # builds with host networking so it can reach Postgres; runs migrations
 docker compose --profile app up -d app  # serves on 127.0.0.1:3000
 ```
 
-- Without `S3_*`, uploaded images are stored in the `media` Docker volume.
+- Uploaded images are stored in the `media` Docker volume.
 - **Scheduled publishing** runs inside the app every minute (no cron needed on a long-running server).
 - **Reverse proxy** (Caddy, automatic HTTPS), `/etc/caddy/Caddyfile`:
 
@@ -144,7 +138,7 @@ docker compose --profile app up -d app  # serves on 127.0.0.1:3000
 
   and restore with `pg_restore --clean --no-owner -d "$DATABASE_URI" bob-YYYY-MM-DD.dump`.
 
-- **Images:** R2 bucket versioning or a scheduled `rclone sync` to a second bucket (A); back up the `media`
+- **Images:** download the Blob store's files periodically (A); back up the `media`
   volume (B).
 - Test a restore at least once before launch.
 

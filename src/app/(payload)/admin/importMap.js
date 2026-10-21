@@ -16,7 +16,7 @@ import { ReviewStatusField as ReviewStatusField_2b4b15590a054204b5ea9c8683a9ab0a
 import { Icon as Icon_5e5faf0b52dd04b8a9ab3e7f9bfb5266 } from '@/admin/Brand'
 import { Logo as Logo_5e5faf0b52dd04b8a9ab3e7f9bfb5266 } from '@/admin/Brand'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
-import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -38,5 +38,5 @@ export const importMap = {
   "@/admin/Brand#Icon": Icon_5e5faf0b52dd04b8a9ab3e7f9bfb5266,
   "@/admin/Brand#Logo": Logo_5e5faf0b52dd04b8a9ab3e7f9bfb5266,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

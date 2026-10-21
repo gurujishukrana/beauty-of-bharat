@@ -265,6 +265,8 @@ export interface Media {
    * Created by the seed script. Run `pnpm seed:clear` to remove all sample content.
    */
   isSample?: boolean | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -989,6 +991,8 @@ export interface MediaSelect<T extends boolean = true> {
   caption?: T;
   credit?: T;
   isSample?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

@@ -6,7 +6,8 @@ import { fileURLToPath } from 'url'
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-const mediaHost = process.env.S3_PUBLIC_URL ? new URL(process.env.S3_PUBLIC_URL) : null
+// Photos uploaded on the live site are served from Vercel Blob's CDN.
+const BLOB_HOST = '*.public.blob.vercel-storage.com'
 
 /**
  * Content Security Policy for the public site. Scripts are limited to our own origin plus
@@ -19,7 +20,7 @@ const csp = [
   "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com" +
     (process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''),
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob:${mediaHost ? ` ${mediaHost.origin}` : ''}`,
+  `img-src 'self' data: blob: https://${BLOB_HOST}`,
   "font-src 'self'",
   "connect-src 'self' https://challenges.cloudflare.com",
   'frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.instagram.com https://challenges.cloudflare.com',
@@ -51,14 +52,7 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/brand/**' }],
-    remotePatterns: mediaHost
-      ? [
-          {
-            protocol: mediaHost.protocol.replace(':', '') as 'https' | 'http',
-            hostname: mediaHost.hostname,
-          },
-        ]
-      : [],
+    remotePatterns: [{ protocol: 'https', hostname: BLOB_HOST }],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   async headers() {

@@ -27,6 +27,16 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const isServerless = Boolean(process.env.VERCEL)
 
+/**
+ * Vercel Blob token. Vercel names it BLOB_READ_WRITE_TOKEN, or <STORE_NAME>_READ_WRITE_TOKEN when the
+ * store is connected with a custom prefix, so accept either.
+ */
+const blobToken =
+  process.env.BLOB_READ_WRITE_TOKEN ||
+  Object.entries(process.env).find(
+    ([key, value]) => key.endsWith('_READ_WRITE_TOKEN') && value?.startsWith('vercel_blob_rw_'),
+  )?.[1]
+
 /** "Name <address>" → parts, for the admin's own emails (password resets). */
 const [, fromName = 'Beauty of Bharat', fromAddress = 'noreply@thebeautyofbharat.com'] =
   /^\s*"?([^"<]*?)"?\s*<([^>]+)>\s*$/.exec(process.env.CONTACT_FROM_EMAIL || '') ?? []
@@ -108,8 +118,8 @@ export default buildConfig({
     // store is connected); elsewhere they stay on local disk. `alwaysInsertFields` keeps the
     // database schema identical in both cases, so the committed migrations always match.
     vercelBlobStorage({
-      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      enabled: Boolean(blobToken),
+      token: blobToken,
       alwaysInsertFields: true,
       // Upload straight from the browser, so large photos aren't blocked by Vercel's 4.5 MB request limit.
       clientUploads: true,

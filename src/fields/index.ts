@@ -51,7 +51,7 @@ export const SOCIAL_PLATFORMS = [
   { label: 'YouTube', value: 'youtube' },
   { label: 'LinkedIn', value: 'linkedin' },
   { label: 'Facebook', value: 'facebook' },
-  { label: 'WhatsApp channel', value: 'whatsapp' },
+  { label: 'WhatsApp', value: 'whatsapp' },
   { label: 'Website', value: 'website' },
   { label: 'Email', value: 'email' },
 ] as const

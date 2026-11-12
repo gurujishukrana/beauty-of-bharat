@@ -102,7 +102,6 @@ export async function seed(payload: Payload) {
   // People (no photos: the site shows initials until real portraits are uploaded)
   const personIds = new Map<string, number>()
   for (const [i, person] of sample.people.entries()) {
-    const firstName = person.name.split(' ')[0].toLowerCase()
     const created = await payload.create({
       collection: 'people',
       data: {
@@ -116,7 +115,6 @@ export async function seed(payload: Payload) {
         pressCardNumber: person.card,
         pressCardStatus: 'active',
         dateJoined: person.joined,
-        socialLinks: [{ platform: 'email', url: `${firstName}@thebeautyofbharat.com` }],
         showOnPeoplePage: true,
         order: (i + 1) * 10,
         isSample: true,
@@ -240,12 +238,12 @@ export async function seed(payload: Payload) {
     slug: 'siteSettings',
     data: {
       socialLinks: [
-        { platform: 'instagram', url: 'https://www.instagram.com/' },
+        { platform: 'instagram', url: 'https://www.instagram.com/beautyofbharatnews/' },
         { platform: 'youtube', url: 'https://www.youtube.com/' },
-        { platform: 'whatsapp', url: 'https://www.whatsapp.com/channel/' },
+        { platform: 'whatsapp', url: 'https://wa.me/918968928945' },
         { platform: 'x', url: 'https://x.com/' },
       ],
-      whatsappNumber: '[WhatsApp number]',
+      whatsappNumber: '+91 8968928945',
       homepage: {
         latestCount: 6,
         groundReportsCategory: categoryIds.get('Ground Reports'),

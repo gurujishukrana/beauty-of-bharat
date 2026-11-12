@@ -61,4 +61,17 @@ await writeFile(
     { size: 48, data: await icon(48, 0.1) },
   ]),
 )
-console.log('Icons written to src/app and public/icons')
+// Default share image (1200×630): the full logo centred on white. Used as og:image / twitter:image
+// when Site settings → Default sharing image is empty.
+const logo = await sharp(await readFile(path.join(root, 'brand/logo-color.svg')), { density: 600 })
+  .resize({ width: 760 })
+  .png()
+  .toBuffer()
+await writeFile(
+  path.join(root, 'public/og-default.png'),
+  await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#ffffff' } })
+    .composite([{ input: logo, gravity: 'center' }])
+    .png()
+    .toBuffer(),
+)
+console.log('Icons written to src/app and public/icons; share image to public/og-default.png')

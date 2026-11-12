@@ -156,7 +156,7 @@ export const SOCIAL_LABELS: Record<keyof typeof SOCIAL_ICONS, string> = {
   youtube: 'YouTube',
   linkedin: 'LinkedIn',
   facebook: 'Facebook',
-  whatsapp: 'WhatsApp channel',
+  whatsapp: 'WhatsApp',
   website: 'Website',
   email: 'Email',
 }

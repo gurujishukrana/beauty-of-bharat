@@ -9,7 +9,6 @@ import { PinIcon, SOCIAL_ICONS, SOCIAL_LABELS } from '@/components/Icons'
 import { JsonLd } from '@/components/JsonLd'
 import { LoadMore } from '@/components/LoadMore'
 import { Mark } from '@/components/Logo'
-import { socialHref } from '@/components/people/PersonCard'
 import { PreviewBar } from '@/components/PreviewBar'
 import { RichText } from '@/components/RichText'
 import { kicker, locationLabel, toCard } from '@/lib/cards'
@@ -18,7 +17,6 @@ import { formatMonthYear } from '@/lib/dates'
 import { breadcrumbJsonLd, profileJsonLd } from '@/lib/jsonld'
 import { toImage } from '@/lib/media'
 import { getPayloadClient, getPersonBySlug, getSiteSettings, listArticles } from '@/lib/queries'
-import { firstName } from '@/lib/text'
 import { absoluteUrl, routes } from '@/lib/url'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -89,8 +87,14 @@ export default async function ProfilePage({ params }: Props) {
     listArticles({ authorId: person.id, limit: ARTICLES_PER_PAGE }),
     getSiteSettings(),
   ])
-  const name = firstName(person.fullName)
-  const socials = person.socialLinks ?? []
+  // Team members' email addresses and phone numbers are never shown: only web links
+  // (Instagram, X, YouTube…) appear, even if an email is entered in the admin.
+  const socials = (person.socialLinks ?? []).filter(
+    (s) =>
+      s.platform !== 'email' &&
+      /^https?:\/\//i.test(s.url) &&
+      !/^https?:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(s.url),
+  )
   const hasBio = Boolean(person.bio?.root?.children?.length)
 
   return (
@@ -181,14 +185,12 @@ export default async function ProfilePage({ params }: Props) {
                 return (
                   <li key={s.id ?? s.url}>
                     <a
-                      href={socialHref(s.platform, s.url)}
+                      href={s.url}
                       rel="me noopener"
                       className="inline-flex min-h-11 items-center gap-2 rounded-xs border border-chip px-4 text-sm font-medium text-ink"
                     >
                       <Icon />
-                      {s.platform === 'email'
-                        ? copy.profile.email(name)
-                        : SOCIAL_LABELS[s.platform]}
+                      {SOCIAL_LABELS[s.platform]}
                     </a>
                   </li>
                 )

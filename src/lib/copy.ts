@@ -42,7 +42,7 @@ export const copy = {
     groundReports: 'Ground reports',
     mostRead: 'Most read',
     peopleKicker: 'Who is behind it',
-    peopleTitle: 'Every story has a reporter you can see',
+    peopleTitle: 'Every story has a name and a face behind it',
     peopleText:
       'Each member of the Beauty of Bharat team carries an official press card. See who they are, where they report from, and everything they have written.',
     meetTeam: 'Meet the team →',
@@ -93,7 +93,7 @@ export const copy = {
     kicker: 'Our team',
     title: 'The People Behind Beauty of Bharat',
     intro:
-      'Our reporters, editors and photographers work from the places they write about. Everyone listed here has been issued an official Beauty of Bharat press card.',
+      'Our editors, reporters and camera team work from the places they write about. Everyone listed here has been issued an official Beauty of Bharat press card.',
     verifyTitle: 'Verify a press card',
     verifyText:
       'If someone says they represent Beauty of Bharat and they are not listed here, please',

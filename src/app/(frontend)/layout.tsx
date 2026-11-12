@@ -8,7 +8,8 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { copy } from '@/lib/copy'
 import { organizationJsonLd, websiteJsonLd } from '@/lib/jsonld'
 import { getSiteSettings } from '@/lib/queries'
-import { getSiteUrl } from '@/lib/url'
+import { toImage } from '@/lib/media'
+import { absoluteUrl, getSiteUrl } from '@/lib/url'
 
 import './globals.css'
 
@@ -44,6 +45,17 @@ export const revalidate = 300
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings()
+  // Share image for pages without their own: Site settings → Default sharing image, or the
+  // static logo card (public/og-default.png, made by `pnpm icons`).
+  const defaultOg = toImage(settings.defaultOgImage, 'og')
+  const shareImage = defaultOg
+    ? {
+        url: absoluteUrl(defaultOg.url),
+        width: defaultOg.width,
+        height: defaultOg.height,
+        alt: defaultOg.alt,
+      }
+    : { url: absoluteUrl('/og-default.png'), width: 1200, height: 630, alt: copy.siteName }
   return {
     metadataBase: new URL(getSiteUrl()),
     title: {
@@ -62,8 +74,9 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: 'en_IN',
       title: copy.siteName,
       description: settings.tagline,
+      images: [shareImage],
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: { card: 'summary_large_image', images: [shareImage.url] },
     formatDetection: { telephone: false },
   }
 }

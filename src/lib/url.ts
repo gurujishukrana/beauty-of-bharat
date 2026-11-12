@@ -31,6 +31,15 @@ export const routes = {
 export const correctionUrl = (articleUrl: string) =>
   `/contact?topic=correction&article=${encodeURIComponent(articleUrl)}`
 
+/**
+ * The WhatsApp number to show, or null when it is "not set": empty, or still a placeholder
+ * like the default "[WhatsApp number]" (anything containing "[").
+ */
+export function whatsappNumberOrNull(number: string | null | undefined): string | null {
+  const value = number?.trim()
+  return value && !value.includes('[') ? value : null
+}
+
 /** wa.me link from a display number such as "+91 98765 43210". */
 export function whatsappLink(number: string | null | undefined): string | null {
   const digits = (number ?? '').replace(/\D/g, '')

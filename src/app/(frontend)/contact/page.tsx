@@ -5,7 +5,7 @@ import { SOCIAL_ICONS, SOCIAL_LABELS, WhatsAppIcon } from '@/components/Icons'
 import { topicFromParam } from '@/lib/contact'
 import { copy } from '@/lib/copy'
 import { getSiteSettings } from '@/lib/queries'
-import { routes, whatsappLink } from '@/lib/url'
+import { routes, whatsappLink, whatsappNumberOrNull } from '@/lib/url'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -27,7 +27,8 @@ export default async function ContactPage({ searchParams }: Props) {
     { title: 'General enquiries', email: desks?.general, text: desks?.generalText },
     { title: 'Corrections', email: desks?.corrections, text: desks?.correctionsText },
   ]
-  const wa = whatsappLink(settings.whatsappNumber)
+  const whatsappNumber = whatsappNumberOrNull(settings.whatsappNumber)
+  const wa = whatsappLink(whatsappNumber)
   const socials = settings.socialLinks ?? []
 
   return (
@@ -75,20 +76,22 @@ export default async function ContactPage({ searchParams }: Props) {
         </div>
 
         <aside className="flex min-w-0 flex-[1_1_300px] flex-col gap-5">
-          <div className="flex flex-col gap-3 bg-sand p-7">
-            <div className="flex items-center gap-2.5">
-              <WhatsAppIcon size={22} className="text-green-text" />
-              <h2 className="text-[17px] font-bold">{copy.contact.whatsapp}</h2>
+          {whatsappNumber ? (
+            <div className="flex flex-col gap-3 bg-sand p-7">
+              <div className="flex items-center gap-2.5">
+                <WhatsAppIcon size={22} className="text-green-text" />
+                <h2 className="text-[17px] font-bold">{copy.contact.whatsapp}</h2>
+              </div>
+              <p className="text-[15px] leading-[1.55] text-muted">{copy.contact.whatsappText}</p>
+              {wa ? (
+                <a href={wa} className="text-base font-semibold text-ink" rel="noopener">
+                  {whatsappNumber}
+                </a>
+              ) : (
+                <span className="text-base font-semibold">{whatsappNumber}</span>
+              )}
             </div>
-            <p className="text-[15px] leading-[1.55] text-muted">{copy.contact.whatsappText}</p>
-            {wa ? (
-              <a href={wa} className="text-base font-semibold text-ink" rel="noopener">
-                {settings.whatsappNumber}
-              </a>
-            ) : (
-              <span className="text-base font-semibold">{settings.whatsappNumber}</span>
-            )}
-          </div>
+          ) : null}
           {socials.length > 0 && (
             <div className="flex flex-col gap-3.5 border border-rule p-7">
               <h2 className="text-[17px] font-bold">{copy.contact.follow}</h2>
